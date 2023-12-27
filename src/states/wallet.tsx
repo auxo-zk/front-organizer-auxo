@@ -3,6 +3,8 @@ import { Mina, PublicKey, fetchAccount } from 'o1js';
 import { useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { LocalStorageKey, LocalStorageValue } from 'src/constants';
+import { Signature, Field, Scalar } from 'o1js';
+import { getServerSig, getTokenFromSig } from 'src/services/services';
 
 export type TWalletData = {
     userAddress: string;
@@ -87,9 +89,36 @@ export const useWalletFunction = () => {
     }
 
     async function login() {
-        localStorage.setItem(LocalStorageKey.AccessToken, '123');
-        setWalletData({ logged: true });
-        console.log('login');
+        try {
+            const message = await getServerSig();
+            console.log('🚀 ~ file: wallet.tsx:94 ~ login ~ message:', message);
+            const sig = await signMessage(JSON.stringify(message));
+            if (sig) {
+                const token = await getTokenFromSig({
+                    address: walletData.userAddress,
+                    role: 0,
+                    serverSignature: message,
+                    signature: {
+                        r: sig.signature.field,
+                        s: sig.signature.scalar,
+                    },
+                });
+                localStorage.setItem(LocalStorageKey.AccessToken, token);
+                setWalletData({ logged: true });
+                toast('Login Success', { type: 'success' });
+            }
+        } catch (error) {
+            toast((error as Error).message, { type: 'error' });
+        }
+    }
+
+    async function signMessage(content: string) {
+        try {
+            const signature = await window.mina?.signMessage({ message: content });
+            return signature;
+        } catch (error) {
+            console.log('🚀 ~ file: wallet.tsx:100 ~ signMessage ~ error:', error);
+        }
     }
     return {
         setWalletData,
@@ -98,6 +127,7 @@ export const useWalletFunction = () => {
         logout,
         login,
         updateLoginStatus,
+        signMessage,
     };
 };
 

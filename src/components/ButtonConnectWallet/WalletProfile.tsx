@@ -5,7 +5,6 @@ import { Paper } from '@mui/material';
 
 export default function WalletProfile() {
     const { logged } = useWalletData();
-
     return (
         <Paper sx={{ minWidth: '300px' }}>
             {logged && <WalletVerified />}
