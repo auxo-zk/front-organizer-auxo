@@ -13,7 +13,6 @@ export type TCommitteeData = {
 };
 export async function getListCommittees(): Promise<TCommitteeData[]> {
     const response = await axios.get(apiUrl.listCommittee);
-    console.log('List committee', response.data);
 
     return response.data.map((item: any) => {
         return {
@@ -33,4 +32,30 @@ export async function postCreateCommittee(data: { name: string; creator: string;
     const response = await axios.post(apiUrl.createCommittee, data);
     console.log('post new committee', response.data);
     return response.data;
+}
+
+type RTSeverSig = {
+    msg: string[];
+    signature: string;
+};
+export async function getServerSig(): Promise<RTSeverSig> {
+    const response = (await axios.get(apiUrl.serverSigNature)).data as RTSeverSig;
+    return response;
+}
+
+type RTGetTokenFromSig = string;
+export async function getTokenFromSig(data: {
+    address: string;
+    role: number;
+    signature: {
+        r: string;
+        s: string;
+    };
+    serverSignature: {
+        msg: string[];
+        signature: string;
+    };
+}): Promise<RTGetTokenFromSig> {
+    const response = (await axios.post(apiUrl.getTokenFromSig, data)).data as RTGetTokenFromSig;
+    return response;
 }
