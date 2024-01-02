@@ -1,5 +1,10 @@
 import { Container } from '@mui/material';
+import Profile from 'src/views/profile/Profile';
 
-export default function Profile() {
-    return <Container sx={{ pt: 3 }}>Profile</Container>;
+export default function ProfilePage() {
+    return (
+        <Container sx={{ pt: 5 }}>
+            <Profile />
+        </Container>
+    );
 }

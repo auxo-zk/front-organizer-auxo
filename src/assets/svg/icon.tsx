@@ -19,6 +19,62 @@ export const IconMenuExplorer: SvgComponent = (props) => {
     );
 };
 
+export const IconFolder: SvgComponent = (props) => {
+    return (
+        <MuiSvgIcon {...props} viewBox="0 0 16 16" fill="none">
+            <path d="M2.66659 13.3334C2.29992 13.3334 1.98603 13.2029 1.72492 12.9417C1.46381 12.6806 1.33325 12.3667 1.33325 12.0001V4.00008C1.33325 3.63341 1.46381 3.31953 1.72492 3.05841C1.98603 2.7973 2.29992 2.66675 2.66659 2.66675H6.66658L7.99992 4.00008H13.3333C13.6999 4.00008 14.0138 4.13064 14.2749 4.39175C14.536 4.65286 14.6666 4.96675 14.6666 5.33341V12.0001C14.6666 12.3667 14.536 12.6806 14.2749 12.9417C14.0138 13.2029 13.6999 13.3334 13.3333 13.3334H2.66659Z" />
+        </MuiSvgIcon>
+    );
+};
+
+export const IconEdit: SvgComponent = (props) => {
+    return (
+        <MuiSvgIcon {...props} viewBox="0 0 24 22" fill="none">
+            <path d="M8.32062 21H22.5125" stroke={'#043E35'} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+                d="M16.9734 1.72567C17.1972 1.496 17.4648 1.31347 17.7602 1.18884C18.0557 1.06421 18.3731 1 18.6938 1C19.0145 1 19.3319 1.06421 19.6274 1.18884C19.9228 1.31347 20.1904 1.496 20.4142 1.72567C20.8709 2.19445 21.1265 2.82307 21.1265 3.47758C21.1265 4.13208 20.8709 4.76071 20.4142 5.22948L6.07619 19.8313L1.48749 20.9993L2.6344 16.3296L16.9734 1.72567Z"
+                fill="#043E35"
+                stroke="#043E35"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </MuiSvgIcon>
+    );
+};
+
+export const IconChevonLeft: SvgComponent = (props) => {
+    return (
+        <MuiSvgIcon {...props} viewBox="0 0 18 25" fill="none">
+            <path d="M15.4883 1.55264L18 4.05942C17.4271 4.16936 16.8984 4.45522 16.4577 4.89501L8.68052 12.6572L16.4577 20.4194C16.8984 20.8592 17.4271 21.1231 18 21.255L15.4883 23.7618C14.2986 24.9492 12.3378 24.9492 11.126 23.7618L2.96222e-06 12.6572L11.126 1.55264C12.3378 0.365222 14.2766 0.365222 15.4883 1.55264Z" />
+        </MuiSvgIcon>
+    );
+};
+export const IconChevonRight: SvgComponent = (props) => {
+    return (
+        <MuiSvgIcon {...props} viewBox="0 0 18 25" fill="none">
+            <path d="M2.51167 23.7618L4.46765e-05 21.255C0.572871 21.1451 1.10163 20.8592 1.54227 20.4194L9.31948 12.6572L1.54227 4.89504C1.10164 4.45525 0.572874 4.19138 4.71876e-05 4.05945L2.51167 1.55267C3.70138 0.365254 5.66221 0.365254 6.87396 1.55267L18 12.6572L6.87396 23.7618C5.66221 24.9492 3.72341 24.9492 2.51167 23.7618Z" />
+        </MuiSvgIcon>
+    );
+};
+
+export const IconDownload: SvgComponent = (props) => {
+    return (
+        <MuiSvgIcon {...props} viewBox="0 0 12 12" fill="none">
+            <g>
+                <path
+                    d="M11.5 7.8335V10.2775C11.5 10.6016 11.3713 10.9124 11.1421 11.1416C10.9129 11.3708 10.6021 11.4995 10.278 11.4995H1.722C1.56152 11.4995 1.40262 11.4679 1.25436 11.4065C1.1061 11.3451 0.971389 11.2551 0.857915 11.1416C0.744442 11.0281 0.65443 10.8934 0.593019 10.7451C0.531608 10.5969 0.5 10.438 0.5 10.2775V7.8335"
+                    // stroke="#2C978F"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+                <path d="M9.05509 4.7775L6.00009 7.8335L2.94409 4.7775" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M6 7.8335V0.500496" strokeLinecap="round" strokeLinejoin="round" />
+            </g>
+        </MuiSvgIcon>
+    );
+};
+
 export const IconInvestor: SvgComponent = (props) => {
     return (
         <MuiSvgIcon
@@ -75,7 +131,14 @@ export const IconCommittee: SvgComponent = (props) => {
 
 export const IconSpinLoading: SvgComponent = (props) => {
     return (
-        <MuiSvgIcon {...props} sx={{ mx: 'auto', display: 'block', shapeRendering: 'auto', color: 'primary.light', ...props.sx }} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <MuiSvgIcon
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            sx={{ mx: 'auto', display: 'block', shapeRendering: 'auto', color: 'primary.main', ...props.sx }}
+            viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid"
+        >
             <g transform="rotate(0 50 50)">
                 <rect x="45" y="8.5" rx="5" ry="5.5" width="10" height="11">
                     <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite" />

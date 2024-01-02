@@ -90,7 +90,7 @@ export const useWalletFunction = () => {
         setWalletData({ logged: false });
     }
 
-    async function login(walletAddress?: string | undefined) {
+    async function login(walletAddress: string = '') {
         try {
             const message = await getServerSig();
             const sig = await signMessage(JSON.stringify(message));

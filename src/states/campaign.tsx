@@ -53,8 +53,8 @@ const initData: CampaignDataType = {
     fundingOption: '',
     applicationForm: {
         '0': {
-            hint: '',
-            detail: '',
+            hint: 'Test hint',
+            detail: 'hahahahahaaaaa',
             required: true,
         },
     },
@@ -67,9 +67,27 @@ export default function InitCampaignData({ data }: { data?: CampaignDataType }) 
     setCampaignData(data || initData);
 }
 export const useCampaignFunctions = () => {
-    const setCampaignData = useSetAtom(campaignData);
+    const _setCampaignData = useSetAtom(campaignData);
+
+    const setCampaignData = (data: Partial<CampaignDataType>) => {
+        _setCampaignData((prev) => ({
+            ...prev,
+            ...data,
+        }));
+    };
+
+    const setApplicationForm = (data: CampaignDataType['applicationForm']) => {
+        _setCampaignData((prev) => ({
+            ...prev,
+            applicationForm: {
+                ...prev.applicationForm,
+                ...data,
+            },
+        }));
+    };
     return {
         setCampaignData,
+        setApplicationForm,
     };
 };
 

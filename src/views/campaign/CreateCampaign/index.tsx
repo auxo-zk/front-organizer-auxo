@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import Img from 'src/components/Img/Img';
+import Timeline from './Timeline';
+import ApplicationForm from './ApplicaionForm';
 
 export default function CreateCampaign() {
     const [desciption, setDesciption] = useState<string>('');
@@ -46,39 +48,7 @@ export default function CreateCampaign() {
                 Description*
             </Typography>
             <ReactQuill theme="snow" value={desciption} onChange={setDesciption} />
-            <Typography variant="h6" mt={2} mb={4}>
-                Time line
-            </Typography>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
-            </Box>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
-            </Box>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
-            </Box>
+            <Timeline />
             <Typography variant="h6" mt={2} mb={4}>
                 Privacy Option
             </Typography>
@@ -102,13 +72,7 @@ export default function CreateCampaign() {
                 <TextField label="Capacity" sx={{ width: '140px' }} />
                 <TextField select sx={{ ml: 15, width: '300px' }} />
             </Box>
-            <Typography variant="h6" mt={2} mb={4}>
-                Application Form
-            </Typography>
-            <Paper sx={{ p: 3 }}>
-                <Typography variant="h6">Question 1</Typography>
-                <ReactQuill theme="snow" value={desciption} onChange={setDesciption} />
-            </Paper>
+            <ApplicationForm />
         </Container>
     );
 }

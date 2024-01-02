@@ -9,15 +9,18 @@ export const menu = [
         children: [] as { title: string; url: string }[],
     },
     {
-        icon: Dashboard,
+        icon: IconMenuExplorer,
         title: 'Explorer',
-        url: '/explorer/campaign/create',
-        children: [] as { title: string; url: string }[],
+        url: '/explorer/campaign',
+        children: [
+            { title: 'Projects', url: '/explorer/projects' },
+            { title: 'Campaigns', url: '/explorer/campaigns' },
+        ] as { title: string; url: string }[],
     },
     {
-        icon: Dashboard,
-        title: 'Project',
-        url: '/explorer/project/create',
+        icon: IconUser,
+        title: 'Profile',
+        url: '/profile',
         children: [] as { title: string; url: string }[],
     },
     {

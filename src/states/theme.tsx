@@ -108,8 +108,8 @@ export function getThemeConfig(mode: THEME_MODE): ThemeOptions {
         },
 
         text: {
-            primary: '#001714',
-            secondary: '#707070',
+            primary: '#707070',
+            secondary: '#666D6C',
         },
     };
 
