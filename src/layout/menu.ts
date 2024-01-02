@@ -9,6 +9,18 @@ export const menu = [
         children: [] as { title: string; url: string }[],
     },
     {
+        icon: Dashboard,
+        title: 'Explorer',
+        url: '/explorer/campaign/create',
+        children: [] as { title: string; url: string }[],
+    },
+    {
+        icon: Dashboard,
+        title: 'Project',
+        url: '/explorer/project/create',
+        children: [] as { title: string; url: string }[],
+    },
+    {
         icon: IconCommittee,
         title: 'Contribution',
         url: '/contribution',
