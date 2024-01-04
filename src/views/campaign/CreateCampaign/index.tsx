@@ -7,7 +7,8 @@ import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import Img from 'src/components/Img/Img';
 import Timeline from './Timeline';
-import ApplicationForm from './ApplicaionForm';
+const ApplicationForm = dynamic(() => import('./ApplicaionForm'), { ssr: false });
+const CustomEditor = dynamic(() => import('src/components/CustomEditor/CustomEditor'), { ssr: false });
 
 export default function CreateCampaign() {
     const [desciption, setDesciption] = useState<string>('');
@@ -18,7 +19,7 @@ export default function CreateCampaign() {
                 '& .timeline-row': {
                     display: 'flex',
                     alignItems: 'center',
-                    my: 4,
+                    my: 3,
                 },
                 '& .timeline-dot': { width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'background.primary', border: '2px solid ' + theme.palette.primary.light, mr: 1.5 },
             })}
@@ -43,13 +44,15 @@ export default function CreateCampaign() {
             </Breadcrumbs>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Typography variant="h1">Campaign's information editor</Typography>
-            <TextField label="Project's name" type="text" name="project_name" sx={{ mt: 2 }} />
-            <Typography variant="h6" mt={2} mb={1}>
+            <TextField label="Project's name" type="text" name="project_name" sx={{ mt: 5, mb: 3 }} />
+            <Typography variant="h6" mt={2} mb={2}>
                 Description*
             </Typography>
-            <ReactQuill theme="snow" value={desciption} onChange={setDesciption} />
-            <Timeline />
-            <Typography variant="h6" mt={2} mb={4}>
+            <CustomEditor value={desciption} onChange={setDesciption} />
+            <Box sx={{ mt: 6 }}>
+                <Timeline />
+            </Box>
+            <Typography variant="h6" mt={6}>
                 Privacy Option
             </Typography>
             <Box className="timeline-row">
@@ -60,7 +63,7 @@ export default function CreateCampaign() {
                 <TextField sx={{ width: '300px', mr: 3 }} select />
                 <TextField sx={{ width: '300px' }} select />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 5 }}>
                 <Typography variant="h6" width="260px">
                     Capicity (Projects)
                 </Typography>
