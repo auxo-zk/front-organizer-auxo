@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material';
 import React from 'react';
 import { useWalletData, useWalletFunction } from 'src/states/wallet';
 import { formatAddress } from 'src/utils/format';
+import ConnectedWalletButton from './ConnectedWalletButton';
 
 export default function ButtonConnectWallet() {
     const { userAddress, isConnecting } = useWalletData();
@@ -16,7 +17,7 @@ export default function ButtonConnectWallet() {
             ) : (
                 <>
                     {userAddress ? (
-                        <Button variant="contained">{formatAddress(userAddress)}</Button>
+                        <ConnectedWalletButton />
                     ) : (
                         <Button variant="contained" onClick={connectWallet}>
                             Connect wallet
