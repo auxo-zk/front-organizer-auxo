@@ -9,7 +9,7 @@ const nextConfig = {
         return [
             {
                 source: '/',
-                destination: '/dashboard',
+                destination: '/explorer',
                 permanent: true, // save cached redirect
             },
         ];
