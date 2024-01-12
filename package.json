@@ -20,6 +20,7 @@
     "axios": "^1.6.2",
     "bignumber.js": "^9.1.2",
     "coi-serviceworker": "^0.1.7",
+    "date-fns": "^3.2.0",
     "dayjs": "^1.11.10",
     "jotai": "^2.5.1",
     "next": "14.0.2",

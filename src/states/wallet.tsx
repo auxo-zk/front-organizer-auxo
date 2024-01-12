@@ -97,7 +97,7 @@ export const useWalletFunction = () => {
             if (sig) {
                 const token = await getTokenFromSig({
                     address: walletAddress || walletData.userAddress,
-                    role: 0,
+                    role: 1,
                     serverSignature: message,
                     signature: {
                         r: sig.signature.field,

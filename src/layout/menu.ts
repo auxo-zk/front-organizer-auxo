@@ -11,7 +11,7 @@ export const menu = [
     {
         icon: IconMenuExplorer,
         title: 'Explorer',
-        url: '/explorer/campaign',
+        url: '/explorer',
         children: [
             { title: 'Projects', url: '/explorer/projects' },
             { title: 'Campaigns', url: '/explorer/campaigns' },
