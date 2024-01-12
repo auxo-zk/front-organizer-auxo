@@ -6,6 +6,9 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import Img from 'src/components/Img/Img';
+import Timeline from './Timeline';
+const ApplicationForm = dynamic(() => import('./ApplicaionForm'), { ssr: false });
+const CustomEditor = dynamic(() => import('src/components/CustomEditor/CustomEditor'), { ssr: false });
 
 export default function CreateCampaign() {
     const [desciption, setDesciption] = useState<string>('');
@@ -16,7 +19,7 @@ export default function CreateCampaign() {
                 '& .timeline-row': {
                     display: 'flex',
                     alignItems: 'center',
-                    my: 4,
+                    my: 3,
                 },
                 '& .timeline-dot': { width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'background.primary', border: '2px solid ' + theme.palette.primary.light, mr: 1.5 },
             })}
@@ -41,45 +44,15 @@ export default function CreateCampaign() {
             </Breadcrumbs>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <Typography variant="h1">Campaign's information editor</Typography>
-            <TextField label="Project's name" type="text" name="project_name" sx={{ mt: 2 }} />
-            <Typography variant="h6" mt={2} mb={1}>
+            <TextField label="Project's name" type="text" name="project_name" sx={{ mt: 5, mb: 3 }} />
+            <Typography variant="h6" mt={2} mb={2}>
                 Description*
             </Typography>
-            <ReactQuill theme="snow" value={desciption} onChange={setDesciption} />
-            <Typography variant="h6" mt={2} mb={4}>
-                Time line
-            </Typography>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
+            <CustomEditor value={desciption} onChange={setDesciption} />
+            <Box sx={{ mt: 6 }}>
+                <Timeline />
             </Box>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
-            </Box>
-            <Box className="timeline-row">
-                <Box className="timeline-dot" />
-                <Typography width={'180px'} variant="body1">
-                    Application Period
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker label="From" sx={{ mr: 3 }} />
-                    <DateTimePicker label="To" />
-                </LocalizationProvider>
-            </Box>
-            <Typography variant="h6" mt={2} mb={4}>
+            <Typography variant="h6" mt={6}>
                 Privacy Option
             </Typography>
             <Box className="timeline-row">
@@ -90,7 +63,7 @@ export default function CreateCampaign() {
                 <TextField sx={{ width: '300px', mr: 3 }} select />
                 <TextField sx={{ width: '300px' }} select />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 5 }}>
                 <Typography variant="h6" width="260px">
                     Capicity (Projects)
                 </Typography>
@@ -102,13 +75,7 @@ export default function CreateCampaign() {
                 <TextField label="Capacity" sx={{ width: '140px' }} />
                 <TextField select sx={{ ml: 15, width: '300px' }} />
             </Box>
-            <Typography variant="h6" mt={2} mb={4}>
-                Application Form
-            </Typography>
-            <Paper sx={{ p: 3 }}>
-                <Typography variant="h6">Question 1</Typography>
-                <ReactQuill theme="snow" value={desciption} onChange={setDesciption} />
-            </Paper>
+            <ApplicationForm />
         </Container>
     );
 }

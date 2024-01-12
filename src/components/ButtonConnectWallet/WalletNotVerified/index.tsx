@@ -28,7 +28,7 @@ export default function WalletNotVerified() {
             </Box>
             <Box sx={{ border: 'none', width: '100%', backgroundColor: 'divider', height: '2px' }} />
             <Box sx={{ mt: 2 }}>
-                <Button variant="contained" fullWidth sx={{ mb: 1 }} size="small" onClick={login}>
+                <Button variant="contained" fullWidth sx={{ mb: 1 }} size="small" onClick={() => login()}>
                     Login
                 </Button>
                 <Button variant="outlined" fullWidth size="small" onClick={disconnectWallet}>

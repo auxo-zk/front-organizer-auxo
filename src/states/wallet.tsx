@@ -1,9 +1,8 @@
-import { PrimitiveAtom, atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { Mina, PublicKey, fetchAccount } from 'o1js';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
+import { PublicKey, fetchAccount } from 'o1js';
 import { useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { LocalStorageKey, LocalStorageValue } from 'src/constants';
-import { Signature, Field, Scalar } from 'o1js';
 import { getServerSig, getTokenFromSig } from 'src/services/services';
 
 export type TWalletData = {
@@ -52,6 +51,9 @@ export const useWalletFunction = () => {
 
             setWalletData({ userAddress: address, userPubKey: publicKey, accountExists: accountExists, isConnecting: false, logged: false });
             localStorage.setItem(LocalStorageKey.IsConnected, LocalStorageValue.IsConnectedYes);
+            if (!localStorage.getItem(LocalStorageKey.AccessToken)) {
+                await login(address);
+            }
         } catch (err) {
             console.log(err);
             toast((err as Error).message, { type: 'error', position: 'top-center', theme: 'dark' });
@@ -88,15 +90,14 @@ export const useWalletFunction = () => {
         setWalletData({ logged: false });
     }
 
-    async function login() {
+    async function login(walletAddress: string = '') {
         try {
             const message = await getServerSig();
-            console.log('🚀 ~ file: wallet.tsx:94 ~ login ~ message:', message);
             const sig = await signMessage(JSON.stringify(message));
             if (sig) {
                 const token = await getTokenFromSig({
-                    address: walletData.userAddress,
-                    role: 0,
+                    address: walletAddress || walletData.userAddress,
+                    role: 1,
                     serverSignature: message,
                     signature: {
                         r: sig.signature.field,
@@ -141,6 +142,7 @@ export function InitWalletData() {
             await updateLoginStatus();
         }
         fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return null;
 }
