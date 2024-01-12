@@ -10,7 +10,7 @@ export default function CardCampaign({
     data: {
         name: string;
         type: string;
-        organizer: string;
+        organizer?: string;
         capacity: string;
     };
 }) {
