@@ -18,7 +18,7 @@ export default function Profile() {
                         console.log(file);
                     }}
                 />
-                <Box>
+                <Box sx={{ flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h4" fontWeight={600}>
                             Alicia
