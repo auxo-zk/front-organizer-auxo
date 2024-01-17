@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { apiUrl } from '../url';
 import { BACKEND_BASE_URL } from '../baseUrl';
+import { LocalStorageKey } from 'src/constants';
 
 const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
@@ -84,16 +85,16 @@ export type CampaignInput = {
         };
     };
     privacyOption: {
-        isPrivate: true;
-        committeeId: 0;
-        keyId: 0;
+        isPrivate: boolean;
+        committeeId: number;
+        keyId: number;
     };
-    capacity: 0;
-    fundingOption: 0;
+    capacity: number;
+    fundingOption: number;
     questions: {
         question: string;
         hint: string;
-        isRequired: true;
+        isRequired: boolean;
     }[];
 };
 
@@ -103,4 +104,5 @@ export async function postCampaignToIpf(input: CampaignInput) {
         Hash: string;
         Size: number;
     } = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
+    return response;
 }
