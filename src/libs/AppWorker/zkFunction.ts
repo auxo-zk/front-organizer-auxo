@@ -52,7 +52,7 @@ export const zkFunctions = {
     createCampaign: async (args: { sender: string; projectId: string; committeeId: string; ipfsHash: string; keyId: string }) => {
         const sender = PublicKey.fromBase58(args.sender);
         await fetchAccount({ publicKey: sender });
-        await fetchAccount({ publicKey: state.CampaignContract!.address as any });
+        await fetchAccount({ publicKey: state.CampaignContract!.address });
 
         const transaction = await Mina.transaction(sender, () => {
             state.CampaignContract!.createCampaign({
