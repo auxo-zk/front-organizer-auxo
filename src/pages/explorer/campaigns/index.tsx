@@ -22,16 +22,19 @@ export default function Campaigns({ latestFundingCampaigns }: InferGetStaticProp
                     <Image src={imagePath.THUMBNAIL1} alt="auxo thumbnail" style={{ maxWidth: '256px', height: 'auto', width: '100%' }} />
                 </Box>
             </Box>
-            <LatestFundingCampaigns latestFundingCampaigns={latestFundingCampaigns} />
+            <LatestFundingCampaigns text="Top funding campaigns" latestFundingCampaigns={latestFundingCampaigns.slice(0, 3)} />
+
+            <Box sx={{ mt: 10 }}>
+                <LatestFundingCampaigns text="Latest Funding Campaigns" latestFundingCampaigns={latestFundingCampaigns} />
+            </Box>
         </Container>
     );
 }
 
 export const getStaticProps = (async (context) => {
     try {
-        const res = await Promise.all([getLatestFundingCampaigns()]);
-        const latestFundingCampaigns = res[0];
-
+        const res = await getLatestFundingCampaigns();
+        const latestFundingCampaigns = res;
         return {
             props: {
                 latestFundingCampaigns,
