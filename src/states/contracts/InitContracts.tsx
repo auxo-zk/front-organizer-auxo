@@ -12,6 +12,7 @@ export function InitContracts() {
 
     useEffect(() => {
         initClient();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
         const interval = setInterval(async () => {
