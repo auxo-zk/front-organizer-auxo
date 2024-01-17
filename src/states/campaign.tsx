@@ -46,8 +46,8 @@ const initData: CampaignDataType = {
     fundingOption: 0,
     applicationForm: {
         '0': {
-            hint: 'Test hint',
-            detail: 'hahahahahaaaaa',
+            hint: '',
+            detail: '',
             required: true,
         },
     },
