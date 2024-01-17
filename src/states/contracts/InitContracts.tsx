@@ -62,5 +62,5 @@ export function InitContracts() {
             </Box>
         );
     }
-    return <Box></Box>;
+    return <Box />;
 }
