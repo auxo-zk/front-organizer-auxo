@@ -110,6 +110,6 @@ function IconStatus({ step, text }: { step: number; text: string }) {
         </Box>
     );
 }
-function BoxLink({ step }: { step: number }) {
-    return <Box sx={{ m: 0, width: '2x', height: '24px', p: 0, border: step === 3 ? '1px solid #2C978F' : '1px dashed #043E35' }}></Box>;
+export function BoxLink({ step, height }: { step: number; height?: string }) {
+    return <Box sx={{ m: 0, width: '2x', height: height || '24px', p: 0, border: step === 3 ? '1px solid #2C978F' : '1px dashed #043E35' }}></Box>;
 }
