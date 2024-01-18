@@ -25,6 +25,4 @@ export const getServerSideProps = (async (context) => {
     } catch (error) {
         return { notFound: true };
     }
-}) satisfies GetServerSideProps<{
-    data: TProjectDetail;
-}>;
+}) satisfies GetServerSideProps;

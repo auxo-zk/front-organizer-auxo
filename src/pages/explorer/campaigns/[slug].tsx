@@ -20,6 +20,4 @@ export const getServerSideProps = (async (context) => {
         console.log(error);
         return { notFound: true };
     }
-}) satisfies GetServerSideProps<{
-    data: TCampaignDetail;
-}>;
+}) satisfies GetServerSideProps;
