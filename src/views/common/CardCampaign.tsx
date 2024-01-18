@@ -3,21 +3,13 @@ import Link from 'next/link';
 import React from 'react';
 import Card from 'src/components/Card/Card';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { TCampaignData } from 'src/services/campaign/api';
 
-export default function CardCampaign({
-    data,
-}: {
-    data: {
-        name: string;
-        type: string;
-        organizer?: string;
-        capacity: string;
-    };
-}) {
+export default function CardCampaign({ data }: { data: TCampaignData }) {
     return (
         <Card>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link href={`/explorer/campaigns/idcampaigndadad`} style={{ textDecoration: 'none', color: 'unset' }}>
+                <Link href={`/explorer/campaigns/${data.campaignId}`} style={{ textDecoration: 'none', color: 'unset' }}>
                     <Typography variant="h6" fontWeight={600} mb={4}>
                         {data.name}
                     </Typography>

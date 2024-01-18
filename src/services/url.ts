@@ -16,6 +16,7 @@ export const apiUrl = {
     projectDetail: `${BACKEND_BASE_URL}/v0/projects`,
     //campaign
     getCampaign: `${BACKEND_BASE_URL}/v0/campaigns`,
+    getCampaignAll: `${BACKEND_BASE_URL}/v0/campaigns/all`,
     campaignDetail: `${BACKEND_BASE_URL}/v0/campaigns`,
     postCampaignToIpfs: `${BACKEND_BASE_URL}/v0/campaigns`,
     //profile
