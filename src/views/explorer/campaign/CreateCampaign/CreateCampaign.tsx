@@ -21,7 +21,7 @@ export default function CreateCampaign() {
                     alignItems: 'center',
                     my: 3,
                 },
-                '& .timeline-dot': { width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'background.primary', border: '2px solid ' + theme.palette.primary.light, mr: 1.5 },
+                '& .timeline-dot': { width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'background.primary', border: '2px solid ' + theme.palette.primary.light },
             })}
         >
             <Img
