@@ -1,21 +1,16 @@
-import { ChevronLeft, ChevronLeftRounded } from '@mui/icons-material';
-import { Box, Breadcrumbs, Container, Typography } from '@mui/material';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Link from 'next/link';
 import React from 'react';
-import ButtonGroup from 'src/components/ButtonGroup/ButtonGroup';
-import Img from 'src/components/Img/Img';
 import { TCampaignDetail, getCampaignOverview } from 'src/services/campaign/api';
-import Campaigns from 'src/views/explorer/campaign/Campaigns';
+import DetailCampaigns from 'src/views/explorer/campaign/DetailCampaign/DetailCampaign';
 
 export default function DetailCampaign({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    return <Campaigns data={data} />;
+    return <DetailCampaigns data={data} />;
 }
 
 export const getServerSideProps = (async (context) => {
     try {
-        const id = context;
-        const res = await getCampaignOverview('0');
+        const id = context.params?.slug || '';
+        const res = await getCampaignOverview(id as any);
         const data = res;
 
         return {

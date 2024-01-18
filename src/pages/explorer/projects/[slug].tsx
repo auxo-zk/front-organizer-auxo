@@ -15,7 +15,8 @@ export default function DetailProject({ data }: InferGetStaticPropsType<typeof g
 
 export const getServerSideProps = (async (context) => {
     try {
-        const res = await getProjectDetail('0');
+        const id = context.params?.slug || '';
+        const res = await getProjectDetail(id as any);
         const data = res;
 
         return {

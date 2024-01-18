@@ -10,6 +10,7 @@ export type TProjectData = {
     date: string;
     banner: string;
     avatar: string;
+    idProject: string;
 };
 const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
@@ -25,6 +26,7 @@ export async function getTopProject(): Promise<TProjectData[]> {
         banner: item.banner || '',
         desc: item.ipfsData?.description || '',
         date: new Date().toLocaleDateString(),
+        idProject: item.projectId + '' || '#',
     }));
 }
 

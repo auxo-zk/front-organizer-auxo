@@ -7,10 +7,10 @@ const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
 };
 
-export type TCampaignData = { name: string; type: string; date: string; capacity: string; img?: string; banner?: string; status?: number };
+export type TCampaignData = { name: string; type: string; date: string; capacity: string; img?: string; banner?: string; status?: number; campaignId: string };
 export const apiLatestFundingCampaigns = '';
 export async function getLatestFundingCampaigns(): Promise<TCampaignData[]> {
-    const response: any[] = (await axios.get(apiUrl.getCampaign + '?owner=B62qmtfTkHLzmvoKYcTLPeqvuVatnB6wtnXsP6jrEi6i2eUEjcxWauH')).data;
+    const response: any[] = (await axios.get(apiUrl.getCampaignAll)).data;
 
     return response.map((item) => ({
         name: item.ipfsData.name || '',
@@ -20,6 +20,7 @@ export async function getLatestFundingCampaigns(): Promise<TCampaignData[]> {
         img: item.ipfsData.img || '',
         banner: '',
         status: item.status || 0,
+        campaignId: item.campaignId + '' || '#',
     }));
 }
 
