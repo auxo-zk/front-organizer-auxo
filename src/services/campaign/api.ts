@@ -13,11 +13,11 @@ export async function getLatestFundingCampaigns(): Promise<TCampaignData[]> {
     const response: any[] = (await axios.get(apiUrl.getCampaignAll)).data;
 
     return response.map((item) => ({
-        name: item.ipfsData.name || '',
+        name: item.ipfsData?.name || '',
         type: 'Public, grans',
-        capacity: String(item.ipfsData.capacity || ''),
+        capacity: String(item.ipfsData?.capacity || ''),
         date: new Date().toLocaleDateString(),
-        img: item.ipfsData.img || '',
+        img: item.ipfsData?.img || '',
         banner: '',
         status: item.status || 0,
         campaignId: item.campaignId + '' || '#',
@@ -52,12 +52,12 @@ export async function getCampaignOverview(campaignId: string): Promise<TCampaign
     const responseOverview: any = (await axios.get(apiUrl.campaignDetail + `/${campaignId}`)).data;
     // const responseResult: any = (await axios.get(apiUrl.campaignDetail + `/${campaignId}/result`)).data;
     return {
-        name: responseOverview.ipfsData.name,
+        name: responseOverview.ipfsData?.name || '---',
         banner: '',
         overview: {
             organizer: responseOverview.owner,
-            capacity: responseOverview.ipfsData.capacity,
-            description: responseOverview.ipfsData.description,
+            capacity: responseOverview.ipfsData?.capacity || '',
+            description: responseOverview.ipfsData?.description || '',
             allocation: responseOverview.ipfsData?.timeline?.allocation || '',
             application: responseOverview.ipfsData?.timeline?.application || '',
             investment: responseOverview.ipfsData?.timeline?.investment || '',
@@ -99,11 +99,11 @@ export type CampaignInput = {
     }[];
 };
 
-export async function postCampaignToIpf(input: CampaignInput) {
-    const response: {
-        Name: string;
-        Hash: string;
-        Size: number;
-    } = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
-    return response;
+export async function postCampaignToIpfs(input: CampaignInput): Promise<{
+    Name: string;
+    Hash: string;
+    Size: number;
+}> {
+    const response = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
+    return response.data;
 }
