@@ -58,7 +58,7 @@ export const zkFunctions = {
             state.CampaignContract!.createCampaign({
                 committeeId: new Field(args.committeeId),
                 ipfsHash: IPFSHash.fromString(args.ipfsHash),
-                keyId: Field(args.committeeId),
+                keyId: Field(args.keyId),
             });
         });
         state.transaction = transaction;
