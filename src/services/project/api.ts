@@ -12,18 +12,16 @@ export type TProjectData = {
     avatar: string;
     idProject: string;
 };
-const getJwt = () => {
+export const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
 };
-
-export const apiGetTopProject = '';
 
 export async function getTopProject(): Promise<TProjectData[]> {
     const response: any[] = (await axios.get(apiUrl.getTopProject)).data;
     return response.map((item: any) => ({
         name: item.ipfsData?.name || '',
-        avatar: item.avatar || '',
-        banner: item.banner || '',
+        avatar: item?.ipfsData?.avatarImage || '',
+        banner: item?.ipfsData?.coverImage || '',
         desc: item.ipfsData?.description || '',
         date: new Date().toLocaleDateString(),
         idProject: item.projectId + '' || '#',
@@ -60,6 +58,7 @@ export type TProjectFundRaising = {
 export type TProjectDetail = {
     name: string;
     avatar: string;
+    banner: string;
     date: string;
     overview: TProjectOverview;
     fundrasing: TProjectFundRaising;
@@ -67,8 +66,9 @@ export type TProjectDetail = {
 export async function getProjectDetail(projectId: string): Promise<TProjectDetail> {
     const response = (await axios.get(apiUrl.projectDetail + `/${projectId}`)).data;
     return {
-        name: response.ipfsData.name,
-        avatar: '',
+        name: response?.ipfsData?.name || '',
+        avatar: response?.ipfsData?.avatarImage || '',
+        banner: response?.ipfsData?.coverImage || '',
         date: new Date().toLocaleDateString(),
         fundrasing: {
             raisedAmount: 0,
@@ -93,14 +93,14 @@ export async function getProjectDetail(projectId: string): Promise<TProjectDetai
             documents: [],
         },
         overview: {
-            description: response.ipfsData.description,
+            description: response?.ipfsData?.description || '',
             documents: [],
-            member: response.ipfsData.members,
-            problemStatement: response.ipfsData.problemStatement,
+            member: response?.ipfsData?.members || [],
+            problemStatement: response.ipfsData?.problemStatement || '',
             campaignAmount: 0,
             raisingAmount: 0,
-            challengesAndRisk: response.ipfsData.challengesAndRisks,
-            solution: response.ipfsData.solution,
+            challengesAndRisk: response.ipfsData?.challengesAndRisks || '',
+            solution: response?.ipfsData?.solution || '',
         },
     };
 }
