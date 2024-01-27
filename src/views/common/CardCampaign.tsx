@@ -7,7 +7,7 @@ import { TCampaignData } from 'src/services/campaign/api';
 
 export default function CardCampaign({ data }: { data: TCampaignData }) {
     return (
-        <Card>
+        <Card avatar={data.avatar} banner={data.banner}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Link href={`/explorer/campaigns/${data.campaignId}`} style={{ textDecoration: 'none', color: 'unset' }}>
                     <Typography variant="h6" fontWeight={600} mb={4}>

@@ -73,7 +73,7 @@ export const useAppContractFunction = () => {
                 await zkApp.workerClient.loadContract();
                 await zkApp.workerClient.compileContract(cacheFiles);
                 await zkApp.workerClient.initZkappInstance({
-                    campaignContract: 'B62qrwUeKch1suZwAzGGMYpDX7fCWiS1fjWYQBXBpVDY5BjzbASNUXU',
+                    campaignContract: 'B62qij4Pc5we9m1n7sx7Cpsq4JB6tjaaHYT2CwJa8Uz9ZwcY2qt5vPn',
                 });
                 setAppContractData({
                     isLoading: false,

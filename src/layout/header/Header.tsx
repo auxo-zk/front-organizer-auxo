@@ -35,7 +35,7 @@ export default function Header({ headerHeight }: { headerHeight: string }) {
             }}
         >
             <Container sx={{ height: headerHeight, display: 'flex', placeItems: 'center' }}>
-                <Box component={'label'} htmlFor="control-sidebar" sx={{ display: { xs: 'flex', md: 'none' }, cursor: 'pointer', ml: 1 }}>
+                <Box component={'label'} htmlFor="control-sidebar" sx={{ display: { xs: 'flex', lg: 'none' }, cursor: 'pointer', ml: 1 }}>
                     <Menu sx={{ fontSize: '28px' }} />
                 </Box>
                 <ButtonConnectWallet />
