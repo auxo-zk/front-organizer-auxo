@@ -5,6 +5,7 @@ import { TProjectDetail } from 'src/services/project/api';
 const initData: TProjectDetail = {
     name: '',
     avatar: '',
+    banner: '',
     date: '',
     fundrasing: {
         raiseInfo: [],
