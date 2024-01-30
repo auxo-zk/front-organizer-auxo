@@ -2,8 +2,13 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        remotePatterns: [{ hostname: 'trunganhmedia.com' }, { hostname: 'www.aipromptsgalaxy.com' }, { hostname: 'bitnews.sgp1.digitaloceanspaces.com' }],
-        remotePatterns: [{ hostname: 'trunganhmedia.com' }, { hostname: 'www.aipromptsgalaxy.com' }, { hostname: 'bitnews.sgp1.digitaloceanspaces.com' }, { hostname: 'pbs.twimg.com' }],
+        remotePatterns: [
+            { hostname: 'trunganhmedia.com' },
+            { hostname: 'www.aipromptsgalaxy.com' },
+            { hostname: 'bitnews.sgp1.digitaloceanspaces.com' },
+            { hostname: 'pbs.twimg.com' },
+            { hostname: 'storage.googleapis.com' },
+        ],
     },
     async redirects() {
         return [
