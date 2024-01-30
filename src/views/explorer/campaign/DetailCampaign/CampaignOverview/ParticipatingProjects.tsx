@@ -25,6 +25,7 @@ export default function ParticipatingProjects({ campaignId }: { campaignId: stri
 
     useEffect(() => {
         getListParticipatingProjects();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (loading) {

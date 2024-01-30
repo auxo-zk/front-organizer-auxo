@@ -5,23 +5,12 @@ import { IconChecked, IconDone } from 'src/assets/svg/icon';
 import { TCampaignData, TCampaignDetail } from 'src/services/campaign/api';
 import { useModalData, useModalFunction } from 'src/states/modal';
 import { formatDate } from 'src/utils/format';
-import ProjectSelect from './ProjectSelect';
 import Img from 'src/components/Img/Img';
 import { imagePath } from 'src/constants/imagePath';
 import ParticipatingProjects from './ParticipatingProjects';
 
 export default function CampaignOverview({ data, idCampaign }: { data: TCampaignDetail['overview']; idCampaign: string }) {
     const { open } = useModalData();
-    const { openModal, closeModal, setModalData } = useModalFunction();
-    const handleOpen = () => {
-        openModal({
-            title: 'Select Project',
-            content: <ProjectSelect />,
-            modalProps: {
-                maxWidth: 'xs',
-            },
-        });
-    };
     const activeSteps = useMemo(() => {
         const timeNow = Date.now();
         if (timeNow > data.allocation.from) return 2;
