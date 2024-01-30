@@ -2,13 +2,13 @@ import axios from 'axios';
 import { apiUrl } from '../url';
 import { BACKEND_BASE_URL } from '../baseUrl';
 import { LocalStorageKey } from 'src/constants';
+import { TProjectData } from '../project/api';
 
 const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
 };
 
 export type TCampaignData = { name: string; type: string; date: string; capacity: string; avatar: string; banner: string; status: number; campaignId: string };
-
 export async function getLatestFundingCampaigns(active: boolean = true): Promise<TCampaignData[]> {
     const response: any[] = (await axios.get(apiUrl.getCampaignAll + `?active=${active}`)).data;
     console.log(response);
@@ -23,9 +23,12 @@ export async function getLatestFundingCampaigns(active: boolean = true): Promise
         campaignId: item.campaignId + '' || '#',
     }));
 }
-
 export type TCampaignDetailOverview = {
-    organizer: string;
+    organizer: {
+        address: string;
+        name: string;
+        avatar: string;
+    };
     capacity: string;
     description: string;
 
@@ -60,7 +63,11 @@ export async function getCampaignOverview(campaignId: string): Promise<TCampaign
         banner: response?.ipfsData?.coverImage || '',
         avatar: response?.ipfsData?.avatarImage || '',
         overview: {
-            organizer: response?.owner || '',
+            organizer: {
+                address: response?.owner || '',
+                avatar: response?.ownerInfo?.img || '',
+                name: response?.ownerInfo?.name || 'Unnkown Name',
+            },
             capacity: response.ipfsData?.capacity || '',
             description: response.ipfsData?.description || '',
             allocation: {
@@ -121,4 +128,18 @@ export async function postCampaignToIpfs(input: CampaignInput): Promise<{
 }> {
     const response = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
     return response.data;
+}
+
+export async function getParticipatingProjects(campaignId: string): Promise<TProjectData[]> {
+    const response = await axios.get(apiUrl.getParticipatingProjects(campaignId));
+    return response.data.map((item: any) => {
+        return {
+            name: item.ipfsData?.name || '',
+            avatar: item?.ipfsData?.avatarImage || '',
+            banner: item?.ipfsData?.coverImage || '',
+            desc: item.ipfsData?.description || '',
+            date: new Date().toLocaleDateString(),
+            idProject: item.projectId + '' || '#',
+        };
+    });
 }

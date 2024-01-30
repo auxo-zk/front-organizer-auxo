@@ -17,11 +17,11 @@ export default function CardProject({ data }: { data: TProjectData }) {
                 {formatDate(data.date, 'dd MMM yyyy')}
             </Typography>
             {/* <Typography variant="h6" color={'secondary.main'}>
-            $870.975.003
-        </Typography>
-        <Typography variant="body3" mt={0.3} mb={1} color={'secondary.main'}>
-            $1.870.975.003
-        </Typography> */}
+                $870.975.003
+            </Typography>
+            <Typography variant="body3" mt={0.3} mb={1} color={'secondary.main'}>
+                $1.870.975.003
+            </Typography> */}
             <Box
                 mt={2}
                 sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '4', WebkitBoxOrient: 'vertical' }}

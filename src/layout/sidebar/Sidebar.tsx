@@ -109,10 +109,10 @@ function SubMenuItem({ indexParent, indexSubmenu, pathname }: { indexParent: num
     return (
         <Box>
             <Link href={subMenu.url} passHref style={{ textDecoration: 'none', color: 'unset' }}>
-                <Box sx={{ display: 'flex', placeItems: 'center', cursor: 'pointer', '&:hover': { background: activeItem ? '' : '#F1F6F5' } }}>
+                <Box sx={{ display: 'flex', placeItems: 'center', cursor: 'pointer', '&:hover': { '& .title-submenu': { color: activeItem ? '' : 'secondary.main' } } }}>
                     <Box sx={{ width: '50px', height: '46px', display: 'flex', justifyContent: 'center', placeItems: 'center' }}></Box>
                     <Box>
-                        <Typography variant="body2" fontWeight={600} sx={{ color: activeItem ? 'secondary.main' : 'primary.light' }}>
+                        <Typography className="title-submenu" variant="body2" fontWeight={600} sx={{ color: activeItem ? 'secondary.main' : 'primary.light', transition: 'color 0.3s' }}>
                             {subMenu.title}
                         </Typography>
                     </Box>

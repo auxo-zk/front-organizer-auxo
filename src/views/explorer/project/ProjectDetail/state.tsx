@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
-import { TProjectDetail } from 'src/services/project/api';
+import { KeyProjectInput, TProjectDetail } from 'src/services/project/api';
 
 const initData: TProjectDetail = {
     name: '',
@@ -14,14 +14,14 @@ const initData: TProjectDetail = {
         documents: [],
     },
     overview: {
-        challengesAndRisk: '',
         description: '',
         documents: [],
         member: [],
-        problemStatement: '',
-        solution: '',
         campaignAmount: 0,
         raisingAmount: 0,
+        [KeyProjectInput.solution]: '',
+        [KeyProjectInput.challengesAndRisks]: '',
+        [KeyProjectInput.problemStatement]: '',
     },
 };
 

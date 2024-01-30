@@ -35,7 +35,6 @@ export default function Explorer({ topProjects, latestFundingCampaigns }: InferG
 export const getStaticProps = (async (context) => {
     try {
         const res = await Promise.all([getTopProject(), getLatestFundingCampaigns()]);
-        console.log('🚀 ~ getStaticProps ~ res:', res);
         const topProjects = res[0];
         const latestFundingCampaigns = res[1];
 
@@ -48,7 +47,7 @@ export const getStaticProps = (async (context) => {
             revalidate: 60, // In seconds
         };
     } catch (error) {
-        console.log('🚀 ~ getStaticProps ~ error:', error);
+        console.log(error);
         return { notFound: true };
     }
 }) satisfies GetStaticProps;

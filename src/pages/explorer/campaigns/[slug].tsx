@@ -3,8 +3,8 @@ import React from 'react';
 import { TCampaignDetail, getCampaignOverview } from 'src/services/campaign/api';
 import DetailCampaigns from 'src/views/explorer/campaign/DetailCampaign/DetailCampaign';
 
-export default function DetailCampaign({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    return <DetailCampaigns data={data} />;
+export default function DetailCampaign({ data, idCampaign }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    return <DetailCampaigns data={data} idCampaign={idCampaign} />;
 }
 
 export const getServerSideProps = (async (context) => {
@@ -14,7 +14,7 @@ export const getServerSideProps = (async (context) => {
         const data = res;
 
         return {
-            props: { data },
+            props: { idCampaign: id as string, data },
         };
     } catch (error) {
         console.log(error);
