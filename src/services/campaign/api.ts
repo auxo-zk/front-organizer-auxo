@@ -121,13 +121,13 @@ export type CampaignInput = {
     }[];
 };
 
-export async function postCampaignToIpf(input: CampaignInput) {
-    const response: {
-        Name: string;
-        Hash: string;
-        Size: number;
-    } = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
-    return response;
+export async function postCampaignToIpfs(input: CampaignInput): Promise<{
+    Name: string;
+    Hash: string;
+    Size: number;
+}> {
+    const response = await axios.post(apiUrl.postCampaignToIpfs, input, { headers: { Authorization: `Bearer ${getJwt()}` } });
+    return response.data;
 }
 
 export async function getParticipatingProjects(campaignId: string): Promise<TProjectData[]> {

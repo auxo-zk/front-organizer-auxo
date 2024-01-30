@@ -16,11 +16,9 @@ export type TProjectData = {
     avatar: string;
     idProject: string;
 };
-const getJwt = () => {
+export const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
 };
-
-export const apiGetTopProject = '';
 
 export async function getTopProject(): Promise<TProjectData[]> {
     const response: any[] = (await axios.get(apiUrl.getTopProject)).data;

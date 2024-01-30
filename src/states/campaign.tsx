@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { toast } from 'react-toastify';
-import { postCampaignToIpf } from 'src/services/campaign/api';
+import { postCampaignToIpfs } from 'src/services/campaign/api';
 import { useWalletData } from './wallet';
 import { useAppContract } from './contracts';
 
@@ -91,7 +91,7 @@ export const useCampaignFunctions = () => {
             if (workerClient === null) {
                 throw Error('Worker client failed');
             }
-            const response = await postCampaignToIpf({
+            const response = await postCampaignToIpfs({
                 avatarImage: 'https://storage.googleapis.com/auxo/de373f009ca62b59aef619ec35b826c5e517d738234d39bff64b9a00e40559f5.png',
                 capacity: data.capacity,
                 coverImage: 'https://storage.googleapis.com/auxo/de373f009ca62b59aef619ec35b826c5e517d738234d39bff64b9a00e40559f5.png',
@@ -119,7 +119,8 @@ export const useCampaignFunctions = () => {
                     },
                 },
             });
-            const result = await workerClient.createCampaign({
+            // console.log(response);
+            await workerClient.createCampaign({
                 committeeId: '0',
                 ipfsHash: response.Hash || '',
                 keyId: '0',
