@@ -11,7 +11,7 @@ export default function Sidebar({ sidebarWidth, headerHeight }: { sidebarWidth: 
     return (
         <Box
             sx={(theme) => ({
-                [theme.breakpoints.down('lg')]: {
+                [theme.breakpoints.down('md')]: {
                     '#sidebar': {
                         transform: 'translateX(-100%)',
                         '& > #bgsidebar': {
@@ -40,7 +40,7 @@ export default function Sidebar({ sidebarWidth, headerHeight }: { sidebarWidth: 
             })}
         >
             <input id="control-sidebar" type="checkbox" style={{ display: 'none' }} />
-            <Box id="sidebar" sx={{ position: 'fixed', height: '100svh', width: '100%', top: 0, left: 0, maxWidth: { xs: '100%', lg: sidebarWidth }, zIndex: 1000 }}>
+            <Box id="sidebar" sx={{ position: 'fixed', height: '100svh', width: '100%', top: 0, left: 0, maxWidth: { xs: '100%', md: sidebarWidth }, zIndex: 1000 }}>
                 <Box
                     id="bgsidebar"
                     component={'label'}

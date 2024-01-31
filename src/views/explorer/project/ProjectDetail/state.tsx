@@ -31,7 +31,7 @@ export default function InitProjectDetailData({ data }: { data: TProjectDetail }
     const setProjectDetailData = useSetAtom(projectDetail);
     useEffect(() => {
         setProjectDetailData(data);
-        console.log('set:', data);
+        // console.log('set:', data);
     }, [data, setProjectDetailData]);
     return <></>;
 }
