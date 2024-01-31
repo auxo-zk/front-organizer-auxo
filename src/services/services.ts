@@ -34,6 +34,22 @@ export async function postCreateCommittee(data: { name: string; creator: string;
     return response.data;
 }
 
+export type RTCommitteeKey = {
+    _id: string;
+    committeeId: number;
+    keyId: number;
+    status: number;
+    publicKey: string;
+    // round1s: [];
+    // round2s: [];
+    // requests: [];
+};
+
+export async function getCommiteeKeys(committeeId: string): Promise<RTCommitteeKey[]> {
+    const response = await axios.get<RTCommitteeKey[]>(apiUrl.getCommitteKeys(committeeId));
+    return response.data.filter((i) => i.publicKey);
+}
+
 type RTSeverSig = {
     msg: string[];
     signature: string;

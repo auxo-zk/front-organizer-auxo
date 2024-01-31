@@ -7,6 +7,7 @@ import { useAppContract } from './contracts';
 export type CampaignDataType = {
     name: string;
     banner: string;
+    avatar?: string;
     description: string;
     applicationFrom: string;
     applicationTo: string;
@@ -14,7 +15,6 @@ export type CampaignDataType = {
     investmentTo: string;
     allocationFrom: string;
     allocationTo: string;
-
     privateFunding: boolean;
     dkgCommittee: string;
     encyptionKey: string;
@@ -27,6 +27,8 @@ export type CampaignDataType = {
             required?: boolean;
         };
     };
+    bannerFile?: File;
+    avatarFile?: File;
 };
 
 const initData: CampaignDataType = {
@@ -52,8 +54,9 @@ const initData: CampaignDataType = {
         },
     },
 };
+type ImageFiles = { bannerFile?: File; avatarFile?: File };
 
-const campaignData = atom<CampaignDataType>(initData);
+const campaignData = atom<CampaignDataType & ImageFiles>(initData);
 
 export default function InitCampaignData({ data }: { data?: CampaignDataType }) {
     const setCampaignData = useSetAtom(campaignData);

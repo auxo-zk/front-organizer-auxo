@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+    frontend-orgainer:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '3112:3000'
+        environment:
+            NODE_ENV: production # Set your desired Node environment
+

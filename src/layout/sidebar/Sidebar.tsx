@@ -11,7 +11,7 @@ export default function Sidebar({ sidebarWidth, headerHeight }: { sidebarWidth: 
     return (
         <Box
             sx={(theme) => ({
-                [theme.breakpoints.down('lg')]: {
+                [theme.breakpoints.down('md')]: {
                     '#sidebar': {
                         transform: 'translateX(-100%)',
                         '& > #bgsidebar': {
@@ -40,7 +40,7 @@ export default function Sidebar({ sidebarWidth, headerHeight }: { sidebarWidth: 
             })}
         >
             <input id="control-sidebar" type="checkbox" style={{ display: 'none' }} />
-            <Box id="sidebar" sx={{ position: 'fixed', height: '100svh', width: '100%', top: 0, left: 0, maxWidth: { xs: '100%', lg: sidebarWidth }, zIndex: 1000 }}>
+            <Box id="sidebar" sx={{ position: 'fixed', height: '100svh', width: '100%', top: 0, left: 0, maxWidth: { xs: '100%', md: sidebarWidth }, zIndex: 1000 }}>
                 <Box
                     id="bgsidebar"
                     component={'label'}
@@ -109,10 +109,10 @@ function SubMenuItem({ indexParent, indexSubmenu, pathname }: { indexParent: num
     return (
         <Box>
             <Link href={subMenu.url} passHref style={{ textDecoration: 'none', color: 'unset' }}>
-                <Box sx={{ display: 'flex', placeItems: 'center', cursor: 'pointer', '&:hover': { background: activeItem ? '' : '#F1F6F5' } }}>
+                <Box sx={{ display: 'flex', placeItems: 'center', cursor: 'pointer', '&:hover': { '& .title-submenu': { color: activeItem ? '' : 'secondary.main' } } }}>
                     <Box sx={{ width: '50px', height: '46px', display: 'flex', justifyContent: 'center', placeItems: 'center' }}></Box>
                     <Box>
-                        <Typography variant="body2" fontWeight={600} sx={{ color: activeItem ? 'secondary.main' : 'primary.light' }}>
+                        <Typography className="title-submenu" variant="body2" fontWeight={600} sx={{ color: activeItem ? 'secondary.main' : 'primary.light', transition: 'color 0.3s' }}>
                             {subMenu.title}
                         </Typography>
                     </Box>

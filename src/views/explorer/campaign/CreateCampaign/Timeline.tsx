@@ -3,7 +3,6 @@ import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import { useCampaignData, useCampaignFunctions } from 'src/states/campaign';
-import { BoxLink } from '../DetailCampaign/CampaignOverview/CampaignOverview';
 
 export default function Timeline() {
     const { setCampaignData, setApplicationForm } = useCampaignFunctions();
@@ -18,9 +17,9 @@ export default function Timeline() {
                 <Grid item xs={1}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                         <Box className="timeline-dot" sx={{ mb: 0.25 }} />
-                        <BoxLink height="42px" step={0} />
+                        <BoxLink height="42px" step={3} />
                         <Box className="timeline-dot" sx={{ my: 0.25 }} />
-                        <BoxLink height="42px" step={0} />
+                        <BoxLink height="42px" step={3} />
                         <Box className="timeline-dot" sx={{ mt: 0.25 }} />
                     </Box>
                 </Grid>
@@ -90,4 +89,8 @@ export default function Timeline() {
             </Grid>
         </>
     );
+}
+
+export function BoxLink({ step, height }: { step: number; height?: string }) {
+    return <Box sx={{ m: 0, width: '2x', height: height || '24px', p: 0, border: step === 3 ? '1px solid #2C978F' : '1px dashed #818181' }}></Box>;
 }

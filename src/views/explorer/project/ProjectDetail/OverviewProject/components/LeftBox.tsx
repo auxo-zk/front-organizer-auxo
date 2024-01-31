@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { FontInter } from 'src/assets/fonts';
 import { useProjectDetailData } from '../../state';
+import { KeyProjectInput } from 'src/services/project/api';
 
 export default function LeftBox() {
     const { overview } = useProjectDetailData();
@@ -36,19 +37,19 @@ export default function LeftBox() {
                 <Typography variant="h4" mb={1}>
                     Problem Statement
                 </Typography>
-                <Box dangerouslySetInnerHTML={{ __html: overview.problemStatement }}></Box>
+                <Box dangerouslySetInnerHTML={{ __html: overview[KeyProjectInput.problemStatement] }}></Box>
             </Box>
             <Box sx={{ border: '1px solid', borderColor: 'background.primary', borderRadius: '12px', p: 3, mt: 3 }}>
                 <Typography variant="h4" mb={1}>
                     Solution
                 </Typography>
-                <Box dangerouslySetInnerHTML={{ __html: overview.solution }}></Box>
+                <Box dangerouslySetInnerHTML={{ __html: overview[KeyProjectInput.solution] }}></Box>
             </Box>
             <Box sx={{ border: '1px solid', borderColor: 'background.primary', borderRadius: '12px', p: 3, mt: 3 }}>
                 <Typography variant="h4" mb={1}>
                     Challenges & Risks{' '}
                 </Typography>
-                <Box dangerouslySetInnerHTML={{ __html: overview.challengesAndRisk }}></Box>
+                <Box dangerouslySetInnerHTML={{ __html: overview[KeyProjectInput.challengesAndRisks] }}></Box>
             </Box>
         </Box>
     );

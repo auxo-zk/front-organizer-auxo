@@ -21,11 +21,9 @@ export default function ProjectDetail() {
                         <Typography color={'primary.main'}>All Projects</Typography>
                     </Box>
                 </Link>
-                <Link color="inherit" href="#" style={{ textDecoration: 'none', color: 'unset' }}>
-                    <Typography color={'primary.main'} fontWeight={600}>
-                        {name}
-                    </Typography>
-                </Link>
+                <Typography color={'primary.main'} fontWeight={600}>
+                    {name}
+                </Typography>
             </Breadcrumbs>
 
             <Box sx={{ position: 'sticky', top: '64px', bgcolor: 'background.default', pb: 2, zIndex: 2 }}>

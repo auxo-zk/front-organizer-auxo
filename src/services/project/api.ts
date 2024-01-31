@@ -2,7 +2,11 @@ import axios from 'axios';
 import { apiUrl } from '../url';
 import { LocalStorageKey } from 'src/constants';
 
-// export type TProjectData = { name: string; date: string; desc: string };
+export enum KeyProjectInput {
+    'solution' = 'solution',
+    'problemStatement' = 'problem-statement',
+    'challengesAndRisks' = 'challenges-and-risks',
+}
 //PROJECT LIST ************************************************************************************************************************************************
 export type TProjectData = {
     name: string;
@@ -33,15 +37,14 @@ export type TProjectOverview = {
     raisingAmount?: number;
     campaignAmount?: number;
     description: string;
-    problemStatement: string;
-    solution: string;
-    challengesAndRisk: string;
     documents: string[];
     member: {
         name: string;
         role: string;
         link: string;
     }[];
+} & {
+    [key in KeyProjectInput]: string;
 };
 
 export type TProjectFundRaising = {
@@ -63,6 +66,7 @@ export type TProjectDetail = {
     overview: TProjectOverview;
     fundrasing: TProjectFundRaising;
 };
+
 export async function getProjectDetail(projectId: string): Promise<TProjectDetail> {
     const response = (await axios.get(apiUrl.projectDetail + `/${projectId}`)).data;
     return {
@@ -96,11 +100,11 @@ export async function getProjectDetail(projectId: string): Promise<TProjectDetai
             description: response?.ipfsData?.description || '',
             documents: [],
             member: response?.ipfsData?.members || [],
-            problemStatement: response.ipfsData?.problemStatement || '',
             campaignAmount: 0,
             raisingAmount: 0,
-            challengesAndRisk: response.ipfsData?.challengesAndRisks || '',
-            solution: response?.ipfsData?.solution || '',
+            [KeyProjectInput.solution]: response?.ipfsData ? response?.ipfsData[KeyProjectInput.solution] || '' : '',
+            [KeyProjectInput.problemStatement]: response?.ipfsData ? response?.ipfsData[KeyProjectInput.problemStatement] || '' : '',
+            [KeyProjectInput.challengesAndRisks]: response?.ipfsData ? response?.ipfsData[KeyProjectInput.challengesAndRisks] || '' : '',
         },
     };
 }

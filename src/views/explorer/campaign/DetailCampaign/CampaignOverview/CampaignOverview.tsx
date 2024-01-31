@@ -1,19 +1,22 @@
 import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { IconChecked, IconDone } from 'src/assets/svg/icon';
 
 import { TCampaignData, TCampaignDetail } from 'src/services/campaign/api';
 import { useModalData, useModalFunction } from 'src/states/modal';
 import { formatDate } from 'src/utils/format';
+import Img from 'src/components/Img/Img';
+import { imagePath } from 'src/constants/imagePath';
+import ParticipatingProjects from './ParticipatingProjects';
 
-export default function CampaignOverview({ data }: { data: TCampaignDetail['overview'] }) {
+export default function CampaignOverview({ data, idCampaign }: { data: TCampaignDetail['overview']; idCampaign: string }) {
     const { open } = useModalData();
     const { openModal, closeModal, setModalData } = useModalFunction();
     const activeSteps = useMemo(() => {
         const timeNow = Date.now();
-        if (timeNow > data.participation.from && timeNow < data.participation.to) return 0;
-        if (timeNow > data.investment.from && timeNow < data.investment.to) return 1;
-        if (timeNow > data.allocation.from && timeNow < data.allocation.to) return 2;
+        if (timeNow > data.allocation.from) return 2;
+        if (timeNow > data.investment.from) return 1;
+        if (timeNow > data.participation.from) return 0;
 
         return 0;
     }, [data]);
@@ -21,26 +24,27 @@ export default function CampaignOverview({ data }: { data: TCampaignDetail['over
         <Box>
             <Grid container sx={{ mt: 2 }} spacing={2}>
                 <Grid item xs={12} sm={6} sx={{ display: 'flex' }}>
-                    <Avatar src="" alt="" sx={{ width: '96px', height: '96px', mr: 3 }} />
-                    <Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                            <Box>
-                                <Typography variant="body1">Organizer</Typography>
-                                <Typography variant="h6">Pi network</Typography>
+                    <Img src={data.organizer.avatar || imagePath.DEFAULT_AVATAR.src} alt="organizer avatar" sx={{ width: '96px', height: '96px', mr: 2.2, borderRadius: '50%' }} />
+                    <Box flexGrow={1}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, gap: 1.5 }}>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <Typography variant="body1" color={'text.secondary'} mb={1}>
+                                    Organizer
+                                </Typography>
+                                <Typography variant="h6">{data.organizer.name}</Typography>
                             </Box>
-                            <Box>
-                                <Typography variant="body1">Capacity</Typography>
-                                <Typography variant="h6">15/20 projects</Typography>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <Typography variant="body1" color={'text.secondary'} mb={1}>
+                                    Capacity
+                                </Typography>
+                                <Typography variant="h6">{data.capacity} projects</Typography>
                             </Box>
                         </Box>
                         <Box>
-                            <Typography
-                                variant="body1"
-                                color="text.secondary"
+                            <Box
                                 sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}
-                            >
-                                {data.description}
-                            </Typography>
+                                dangerouslySetInnerHTML={{ __html: data.description }}
+                            ></Box>
                         </Box>
                     </Box>
                 </Grid>
@@ -60,16 +64,11 @@ export default function CampaignOverview({ data }: { data: TCampaignDetail['over
                     </Box>
                 </Grid>
             </Grid>
-            <Box>
-                <Typography variant="h6" mt={4} mb={1}>
-                    Participating Projects
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <TextField variant="outlined" color="secondary" placeholder="Search project" />
-                    <Button sx={{ minWidth: '184px' }} variant="contained">
-                        Apply
-                    </Button>
-                </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', placeItems: 'center' }} mt={5.5}>
+                <Typography variant="h6">Participating Projects</Typography>
+            </Box>
+            <Box mt={2.5}>
+                <ParticipatingProjects campaignId={idCampaign} />
             </Box>
         </Box>
     );
@@ -124,8 +123,4 @@ function StepView({ steps, activeStep }: { steps: { title: string; content: stri
             })}
         </Box>
     );
-}
-
-export function BoxLink({ step, height }: { step: number; height?: string }) {
-    return <Box sx={{ m: 0, width: '2x', height: height || '24px', p: 0, border: step === 3 ? '1px solid #2C978F' : '1px dashed #043E35' }}></Box>;
 }
