@@ -1,45 +1,63 @@
 import { LinkedIn, Telegram } from '@mui/icons-material';
-import { Container, Typography, Box, Button } from '@mui/material';
+import { Container, Typography, Box, Button, IconButton, Modal } from '@mui/material';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { IconEdit } from 'src/assets/svg/icon';
 import Avatar from 'src/components/Avatar/Avatar';
+import { TProfileData } from 'src/services/profile/api';
+import { useProfileData, useProfileFunction } from './state';
+import HostingCampaign from './HostingCampaign';
+import { useModalData, useModalFunction } from 'src/states/modal';
+import EditForm from './EditForm';
 
 export default function Profile() {
+    const { address, description, name, img, website } = useProfileData();
+    const { getProfileData, setProfileData, submitProfileAvatar } = useProfileFunction();
+    const {} = useModalData();
+    const { openModal, setModalData } = useModalFunction();
+    useEffect(() => {
+        getProfileData();
+    }, [getProfileData]);
+    const handleOpenModal = () => {
+        setModalData({ content: <EditForm />, open: true });
+    };
     return (
         <Box>
             <Typography variant="h1" textTransform={'uppercase'} maxWidth={'614px'}>
-                Builder Profile
+                Organizer Profile
             </Typography>
             <Box sx={{ display: 'flex', placeItems: 'center', gap: 4, mt: 4 }}>
                 <Avatar
-                    src="https://pbs.twimg.com/profile_images/1732964434363248640/UtVeR8Io_200x200.jpg"
+                    src={img}
                     size={150}
-                    onChange={(file) => {
-                        console.log(file);
+                    onChange={async (file) => {
+                        console.log('🚀 ~ onChange={ ~ file:', file);
+                        try {
+                            if (file![0]) {
+                                await submitProfileAvatar(file![0]);
+                                getProfileData();
+                            }
+                        } catch (error) {}
                     }}
                 />
                 <Box sx={{ flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h4" fontWeight={600}>
-                            Alicia
+                            {name}
                         </Typography>
-                        <IconEdit color="primary" sx={{ cursor: 'pointer' }} />
+                        <IconButton onClick={handleOpenModal}>
+                            <IconEdit color="primary" sx={{ cursor: 'pointer' }} />
+                        </IconButton>
                     </Box>
-                    <Typography color={'primary.light'}>Business Development</Typography>
-                    <Typography mt={1.5}>zkApp & Backend Developer 3 year experience of Typescript and NodejsLooking for a team</Typography>
+                    <Typography mt={1.5}>{description}</Typography>
 
-                    <Box sx={{ display: 'flex', gap: 1.5, placeItems: 'center', mt: 2 }}>
+                    {/* <Box sx={{ display: 'flex', gap: 1.5, placeItems: 'center', mt: 2 }}>
                         <LinkedIn fontSize="large" sx={{ color: 'primary.light' }} />
                         <Telegram fontSize="large" sx={{ color: 'primary.light' }} />
-                    </Box>
+                    </Box> */}
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 5 }}>
-                <Typography variant="h6">Hosting Campaigns</Typography>
-                <Link href="/explorer/campaigns/create" style={{ color: 'inherit', textDecoration: 'none' }}>
-                    <Button variant="contained">Create Campaign</Button>
-                </Link>
-            </Box>
+            <HostingCampaign />
         </Box>
     );
 }
