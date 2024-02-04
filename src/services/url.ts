@@ -24,5 +24,8 @@ export const apiUrl = {
     postCampaignToIpfs: `${BACKEND_BASE_URL}/v0/campaigns`,
     getParticipatingProjects: (campaignId: string) => `${BACKEND_BASE_URL}/v0/campaigns/${campaignId}/projects`,
     //profile
-    getUserProfile: `${BACKEND_BASE_URL}/v0/builders`,
+    getUserProfile: `${BACKEND_BASE_URL}/v0/organizers`,
+    getHostingCampaign: (address: string) => `${BACKEND_BASE_URL}/v0/organizers/${address}/campaigns`,
+    editProfile: `${BACKEND_BASE_URL}/v0/organizers`,
+    editProfileImage: `${BACKEND_BASE_URL}/v0/organizers/update-avatar`,
 };
