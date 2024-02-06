@@ -20,7 +20,12 @@ const state = {
 
 export const zkFunctions = {
     setActiveInstanceToBerkeley: async (args: {}) => {
-        const Berkeley = Mina.Network('https://api.minascan.io/node/berkeley/v1/graphql');
+        const MINAURL = 'https://api.minascan.io/node/berkeley/v1/graphql';
+        const ARCHIVEURL = 'https://api.minascan.io/archive/berkeley/v1/graphql';
+        const Berkeley = Mina.Network({
+            mina: MINAURL,
+            archive: ARCHIVEURL,
+        });
         console.log('Berkeley Instance Created');
         Mina.setActiveInstance(Berkeley);
     },
