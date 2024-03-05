@@ -1,4 +1,5 @@
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { THostingCampaign, fetchHostingCampaign } from 'src/services/profile/api';
 import { useWalletData } from 'src/states/wallet';
