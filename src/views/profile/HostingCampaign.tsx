@@ -6,6 +6,7 @@ import { useWalletData } from 'src/states/wallet';
 export default function HostingCampaign() {
     const { userAddress } = useWalletData();
     const [hostingCampaign, setHostingCampaign] = useState<THostingCampaign[]>([]);
+    console.log('🚀 ~ HostingCampaign ~ hostingCampaign:', hostingCampaign);
     const [loading, setLoading] = useState<boolean>(false);
     useEffect(() => {
         const fetchData = async () => {

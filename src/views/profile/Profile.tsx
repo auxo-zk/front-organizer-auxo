@@ -19,7 +19,7 @@ export default function Profile() {
         getProfileData();
     }, [getProfileData]);
     const handleOpenModal = () => {
-        setModalData({ content: <EditForm />, open: true });
+        setModalData({ content: <EditForm />, open: true, title: 'Edit your profile' });
     };
     return (
         <Box>
