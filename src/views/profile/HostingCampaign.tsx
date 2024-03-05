@@ -1,4 +1,5 @@
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { THostingCampaign, fetchHostingCampaign } from 'src/services/profile/api';
 import { useWalletData } from 'src/states/wallet';
@@ -6,6 +7,7 @@ import { useWalletData } from 'src/states/wallet';
 export default function HostingCampaign() {
     const { userAddress } = useWalletData();
     const [hostingCampaign, setHostingCampaign] = useState<THostingCampaign[]>([]);
+    console.log('🚀 ~ HostingCampaign ~ hostingCampaign:', hostingCampaign);
     const [loading, setLoading] = useState<boolean>(false);
     useEffect(() => {
         const fetchData = async () => {
