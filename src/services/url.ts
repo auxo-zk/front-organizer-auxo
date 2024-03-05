@@ -28,4 +28,5 @@ export const apiUrl = {
     getHostingCampaign: (address: string) => `${BACKEND_BASE_URL}/v0/organizers/${address}/campaigns`,
     editProfile: `${BACKEND_BASE_URL}/v0/organizers`,
     editProfileImage: `${BACKEND_BASE_URL}/v0/organizers/update-avatar`,
+    checkJwt: `${BACKEND_BASE_URL}/v0/auth/profile`,
 };
