@@ -75,3 +75,10 @@ export async function getTokenFromSig(data: {
     const response = (await axios.post(apiUrl.getTokenFromSig, data)).data as RTGetTokenFromSig;
     return response;
 }
+
+export async function saveFile(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res: string = (await axios.post(apiUrl.saveFile, formData)).data;
+    return res;
+}
