@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { postCampaignToIpfs } from 'src/services/campaign/api';
 import { useWalletData } from './wallet';
 import { useAppContract } from './contracts';
+import { saveFile } from 'src/services/services';
 
 export type CampaignDataType = {
     name: string;
@@ -91,10 +92,18 @@ export const useCampaignFunctions = () => {
             if (workerClient === null) {
                 throw Error('Worker client failed');
             }
+            if (!data.avatarFile) {
+                throw Error('Avatar required!');
+            }
+            if (!data.bannerFile) {
+                throw Error('Banner required!');
+            }
+            const avatarUrl = await saveFile(data.avatarFile);
+            const bannerUrl = await saveFile(data.bannerFile);
             const response = await postCampaignToIpfs({
-                avatarImage: 'https://storage.googleapis.com/auxo/de373f009ca62b59aef619ec35b826c5e517d738234d39bff64b9a00e40559f5.png',
+                avatarImage: avatarUrl,
                 capacity: data.capacity,
-                coverImage: 'https://storage.googleapis.com/auxo/de373f009ca62b59aef619ec35b826c5e517d738234d39bff64b9a00e40559f5.png',
+                coverImage: bannerUrl,
                 description: data.description,
                 fundingOption: data.fundingOption,
                 name: data.name,
