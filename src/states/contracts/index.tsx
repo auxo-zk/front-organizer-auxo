@@ -1,17 +1,20 @@
 import { atom, useAtom, useAtomValue } from 'jotai';
 import ZkAppWorkerClient from 'src/libs/AppWorker/zkWorkerClient';
 import { toast } from 'react-toastify';
+import { NetworkId } from 'src/constants';
 
 export type TContractData = {
     workerClient: ZkAppWorkerClient | null;
     isInitWorker: boolean;
     isLoading: boolean;
+    networkId: NetworkId;
 };
 
 const initData: TContractData = {
     workerClient: null,
     isInitWorker: true,
     isLoading: false,
+    networkId: NetworkId.AuxoDevNet,
 };
 
 const appContract = atom<TContractData>(initData);
@@ -73,7 +76,7 @@ export const useAppContractFunction = () => {
                 await zkApp.workerClient.loadContract();
                 await zkApp.workerClient.compileContract(cacheFiles);
                 await zkApp.workerClient.initZkappInstance({
-                    campaignContract: 'B62qij4Pc5we9m1n7sx7Cpsq4JB6tjaaHYT2CwJa8Uz9ZwcY2qt5vPn',
+                    campaignContract: 'B62qpaYMPKGMpC4UvuscjW5VoX21eQJFWmcGxGW1zVqfMAUC18yx933',
                 });
                 setAppContractData({
                     isLoading: false,
