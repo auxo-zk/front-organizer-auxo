@@ -29,4 +29,5 @@ export const apiUrl = {
     editProfile: `${BACKEND_BASE_URL}/v0/organizers`,
     editProfileImage: `${BACKEND_BASE_URL}/v0/organizers/update-avatar`,
     checkJwt: `${BACKEND_BASE_URL}/v0/auth/profile`,
+    getDataCreateCampaign: (committeeId: string, keyId: string) => `${BACKEND_BASE_URL}/v0/method-inputs/campaign-contract/create-campaign?committeeId=${committeeId}&keyId=${keyId}`,
 };

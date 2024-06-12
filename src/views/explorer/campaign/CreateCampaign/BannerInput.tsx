@@ -4,7 +4,7 @@ import Img from 'src/components/Img/Img';
 import { useCampaignFunctions } from 'src/states/campaign';
 
 export default function BannerInput({ img }: { img?: string }) {
-    const { setCampaignData, setApplicationForm, handleCreateCampaign } = useCampaignFunctions();
+    const { setCampaignData, handleCreateCampaign } = useCampaignFunctions();
     const [previewImage, setPreviewImage] = useState<string>(img || '');
     const imageInputRef = useRef<HTMLInputElement>(null);
 

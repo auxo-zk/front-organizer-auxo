@@ -3,6 +3,7 @@ import { apiUrl } from '../url';
 import { BACKEND_BASE_URL } from '../baseUrl';
 import { LocalStorageKey } from 'src/constants';
 import { TProjectData } from '../project/api';
+import { TRef, TWitness } from '../type';
 
 const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
@@ -94,18 +95,9 @@ export type CampaignInput = {
     avatarImage: string;
     description: string;
     timeline: {
-        participation: {
-            from: string;
-            to: string;
-        };
-        investment: {
-            from: string;
-            to: string;
-        };
-        allocation: {
-            from: string;
-            to: string;
-        };
+        startParticipation: number;
+        startFunding: number;
+        startRequesting: number;
     };
     privacyOption: {
         isPrivate: boolean;
@@ -142,4 +134,15 @@ export async function getParticipatingProjects(campaignId: string): Promise<TPro
             idProject: item.projectId + '' || '#',
         };
     });
+}
+
+export type TResponseCampaignCreateData = {
+    keyStatusWitness: TWitness;
+    campaignContractWitness: TWitness;
+    dkgContractRef: TRef;
+    requesterContractRef: TRef;
+};
+export async function getDataCreateCampaign(committeeId: string, keyId: string): Promise<TResponseCampaignCreateData> {
+    const response = await axios.get(apiUrl.getDataCreateCampaign(committeeId, keyId));
+    return response.data;
 }

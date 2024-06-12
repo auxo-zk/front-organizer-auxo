@@ -2,6 +2,7 @@ import { sleep } from 'src/utils/format';
 import { ZkappWorkerReponse, ZkappWorkerRequest } from './worker';
 import { ArgumentZkFuction, ReturenValueZkFunction, TZkFuction } from './zkFunction';
 import { NetworkId } from 'src/constants';
+import { AuxoDevNetInfo } from 'src/constants/chainInfo';
 
 export default class ZkAppWorkerClient {
     worker: Worker;
@@ -46,7 +47,7 @@ export default class ZkAppWorkerClient {
                 memo: memo || '',
             },
         });
-        const transactionLink = `https://berkeley.minaexplorer.com/transaction/${hash}`;
+        const transactionLink = `${AuxoDevNetInfo.explorerUrl}/transaction/${hash}`;
         return { hash, transactionLink };
     }
 

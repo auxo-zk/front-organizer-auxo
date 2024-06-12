@@ -17,7 +17,7 @@ export async function getListCommittees(): Promise<TCommitteeData[]> {
     return response.data.map((item: any) => {
         return {
             id: item['_id'],
-            idCommittee: (item.committeeId + '').padStart(2, '0') || '---',
+            idCommittee: item.committeeId + '' || '---',
             name: item.ipfsData?.name || 'Unknown',
             status: item.active ? 'Active' : 'Pending',
             threshold: item.threshold || 0,
@@ -39,7 +39,7 @@ export type RTCommitteeKey = {
     committeeId: number;
     keyId: number;
     status: number;
-    publicKey: string;
+    key: string;
     // round1s: [];
     // round2s: [];
     // requests: [];
@@ -47,7 +47,7 @@ export type RTCommitteeKey = {
 
 export async function getCommiteeKeys(committeeId: string): Promise<RTCommitteeKey[]> {
     const response = await axios.get<RTCommitteeKey[]>(apiUrl.getCommitteKeys(committeeId));
-    return response.data.filter((i) => i.publicKey);
+    return response.data.filter((i) => i.key);
 }
 
 type RTSeverSig = {
@@ -76,9 +76,10 @@ export async function getTokenFromSig(data: {
     return response;
 }
 
-export async function saveFile(file: File): Promise<string> {
+export type TFileSaved = { fileName: string; fileSize: number; URL: string };
+export async function saveFile(file: File): Promise<TFileSaved> {
     const formData = new FormData();
     formData.append('file', file);
-    const res: string = (await axios.post(apiUrl.saveFile, formData)).data;
+    const res = (await axios.post(apiUrl.saveFile, formData)).data;
     return res;
 }
