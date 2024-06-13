@@ -17,7 +17,7 @@ export async function getUserProfile(address: string): Promise<TProfileData> {
         address: response.address,
         name: response.name || 'Unknown',
         description: response.description || '',
-        img: response.img || '',
+        img: response.img?.URL || '',
         website: response.website || '',
     };
 }
@@ -69,7 +69,7 @@ export async function postProfileAvatar(input: File): Promise<string> {
             Authorization: `Bearer ${jwt}`,
         },
     });
-    return result;
+    return result.URL;
 }
 
 export async function verifyJwt() {

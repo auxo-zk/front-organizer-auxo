@@ -28,6 +28,7 @@ const state = {
     CampaignContract: null as null | ZkAppPlatform.Campaign.CampaignContract,
     transaction: null as null | Transaction,
     compileDone: 0 as number,
+    networkId: null as null | NetworkId,
 };
 
 // ---------------------------------------------------------------------------------------
@@ -41,6 +42,10 @@ export const zkFunctions = {
         });
         console.log(`${networkInfo.name} Instance Created`);
         Mina.setActiveInstance(Network);
+        state.networkId = args.chainId;
+    },
+    getNetworkId: async (args: {}) => {
+        return state.networkId;
     },
     loadContract: async (args: {}) => {
         const [{ ZkApp: ZkAppPlatform }, { ZkApp: ZkAppDkg }] = await Promise.all([import('@auxo-dev/platform'), import('@auxo-dev/dkg')]);

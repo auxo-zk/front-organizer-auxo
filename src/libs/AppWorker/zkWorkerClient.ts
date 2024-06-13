@@ -2,7 +2,7 @@ import { sleep } from 'src/utils/format';
 import { ZkappWorkerReponse, ZkappWorkerRequest } from './worker';
 import { ArgumentZkFuction, ReturenValueZkFunction, TZkFuction } from './zkFunction';
 import { NetworkId } from 'src/constants';
-import { AuxoDevNetInfo } from 'src/constants/chainInfo';
+import { AuxoDevNetInfo, chainInfo } from 'src/constants/chainInfo';
 
 export default class ZkAppWorkerClient {
     worker: Worker;
@@ -47,7 +47,9 @@ export default class ZkAppWorkerClient {
                 memo: memo || '',
             },
         });
-        const transactionLink = `${AuxoDevNetInfo.explorerUrl}/transaction/${hash}`;
+
+        const networkId = await this._call('getNetworkId', {});
+        const transactionLink = `${networkId ? chainInfo[networkId].explorerUrl : 'NULL'}/transaction/${hash}`;
         return { hash, transactionLink };
     }
 
