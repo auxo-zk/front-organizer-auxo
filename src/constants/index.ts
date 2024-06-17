@@ -25,3 +25,5 @@ export enum NetworkId {
     'Mainnet' = 'Mainnet',
     'AuxoDevNet' = 'AuxoDevNetwork',
 }
+
+export const fundingOption = ['Private Grant', 'Public Funding', 'Unknow'];

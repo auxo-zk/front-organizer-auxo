@@ -10,13 +10,11 @@ import { imagePath } from 'src/constants/imagePath';
 import ParticipatingProjects from './ParticipatingProjects';
 
 export default function CampaignOverview({ data, idCampaign }: { data: TCampaignDetail['overview']; idCampaign: string }) {
-    const { open } = useModalData();
-    const { openModal, closeModal, setModalData } = useModalFunction();
     const activeSteps = useMemo(() => {
         const timeNow = Date.now();
-        if (timeNow > data.allocation.from) return 2;
-        if (timeNow > data.investment.from) return 1;
-        if (timeNow > data.participation.from) return 0;
+        if (timeNow > data.timeline.startRequesting) return 2;
+        if (timeNow > data.timeline.startFunding) return 1;
+        if (timeNow > data.timeline.startParticipation) return 0;
 
         return 0;
     }, [data]);
@@ -56,9 +54,9 @@ export default function CampaignOverview({ data, idCampaign }: { data: TCampaign
                         <StepView
                             activeStep={activeSteps}
                             steps={[
-                                { title: 'Participation', content: `${formatDate(Number(data.participation.from || 0), 'dd MMM')} - ${formatDate(Number(data.participation.to || 0), 'dd MMM')}` },
-                                { title: 'Investment', content: `${formatDate(Number(data.investment.from || 0), 'dd MMM')} - ${formatDate(Number(data.investment.to || 0), 'dd MMM')}` },
-                                { title: 'Allocation', content: `${formatDate(Number(data.allocation.from || 0), 'dd MMM')} - ${formatDate(Number(data.allocation.to || 0), 'dd MMM')}` },
+                                { title: 'Participation', content: `Start at: ${formatDate(Number(data.timeline.startParticipation || 0), 'MMMM dd, YYY')}` },
+                                { title: 'Investment', content: `Start at: ${formatDate(Number(data.timeline.startFunding || 0), 'MMMM dd, YYY')}` },
+                                { title: 'Allocation', content: `Start at: ${formatDate(Number(data.timeline.startRequesting || 0), 'MMMM dd, YYY')}` },
                             ]}
                         />
                     </Box>
