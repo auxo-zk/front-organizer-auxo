@@ -9,6 +9,7 @@ export default function HostingCampaign() {
     const [hostingCampaign, setHostingCampaign] = useState<THostingCampaign[]>([]);
     console.log('🚀 ~ HostingCampaign ~ hostingCampaign:', hostingCampaign);
     const [loading, setLoading] = useState<boolean>(false);
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -20,6 +21,7 @@ export default function HostingCampaign() {
             }
             setLoading(false);
         };
+
         if (userAddress) {
             fetchData();
         }

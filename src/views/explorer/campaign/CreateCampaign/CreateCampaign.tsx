@@ -14,11 +14,12 @@ import { RTCommitteeKey, TCommitteeData, getCommiteeKeys, getListCommittees } fr
 import { formatAddress } from 'src/utils/format';
 
 export default function CreateCampaign() {
-    const { setCampaignData, setApplicationForm, handleCreateCampaign } = useCampaignFunctions();
+    const { setCampaignData, handleCreateCampaign } = useCampaignFunctions();
     const [loading, setLoading] = useState<boolean>(false);
-    const { name, description, privateFunding, avatarFile, avatar, dkgCommittee } = useCampaignData();
+    const { name, description, privateFunding, avatarFile, avatar, committeeId, fundingOption } = useCampaignData();
     const [commitees, setCommitees] = useState<TCommitteeData[]>([]);
     const [keys, setKeys] = useState<RTCommitteeKey[]>([]);
+
     useEffect(() => {
         const fetchCommitee = async () => {
             try {
@@ -33,18 +34,21 @@ export default function CreateCampaign() {
 
     useEffect(() => {
         const fetchKeys = async () => {
-            if (dkgCommittee) {
-                try {
+            try {
+                if (committeeId) {
                     //fetch keys
-                    const keysResult = await getCommiteeKeys(dkgCommittee);
+                    const keysResult = await getCommiteeKeys(committeeId);
+                    console.log('keysResult', keysResult);
                     setKeys(keysResult);
-                } catch (err) {
-                    setKeys([]);
+                } else {
+                    throw new Error('No committeeId found');
                 }
+            } catch (err) {
+                setKeys([]);
             }
         };
         fetchKeys();
-    }, [dkgCommittee]);
+    }, [committeeId]);
 
     return (
         <Container
@@ -118,36 +122,40 @@ export default function CreateCampaign() {
             <Typography variant="h6" mt={6}>
                 Privacy Option
             </Typography>
-            <Box className="timeline-row">
-                <Typography width="130px" variant="body1">
-                    Private funding
-                </Typography>
-                <Switch
-                    sx={{ mr: 9 }}
-                    checked={true}
-                    // onChange={(e, checked) => {
-                    //     setCampaignData({ privateFunding: checked });
-                    // }}
-                    // disabled
-                />
-                <Autocomplete
-                    options={commitees.map((i) => ({ label: i.name, value: i.idCommittee }))}
-                    sx={{ width: '300px', mr: 3 }}
-                    renderInput={(params) => <TextField {...params} label="Select DKG committee" />}
-                    onChange={(e, value) => {
-                        setCampaignData({ dkgCommittee: value?.value || '' });
-                    }}
-                />
-                <Autocomplete
-                    disabled={!Boolean(dkgCommittee)}
-                    sx={{ width: '300px' }}
-                    options={keys.map((i) => ({ label: formatAddress(i.publicKey), value: i.keyId }))}
-                    renderInput={(params) => <TextField {...params} label="Select encryption key" />}
-                    onChange={(e, value) => {
-                        // setCampaignData({ encyptionKey: String(value?.value) });
-                    }}
-                />
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '', xsm: '', md: '2fr minmax(200px, 3fr) minmax(200px, 3fr)' }, columnGap: 3, rowGap: 2 }} mt={1}>
+                <Box display={'flex'} sx={{ placeItems: 'center', minWidth: 'max-content' }}>
+                    <Typography variant="body1">Private funding</Typography>
+                    <Switch
+                        sx={{ ml: 2 }}
+                        checked={privateFunding}
+                        onChange={(e, checked) => {
+                            setCampaignData({ privateFunding: checked });
+                        }}
+                    />
+                </Box>
+                <Box sx={{ minWidth: '200px' }}>
+                    <Autocomplete
+                        fullWidth
+                        options={commitees.map((i) => ({ label: i.name, value: i.idCommittee }))}
+                        renderInput={(params) => <TextField {...params} label="Select DKG committee" />}
+                        onChange={(e, value) => {
+                            setCampaignData({ committeeId: value?.value || '' });
+                        }}
+                    />
+                </Box>
+                <Box sx={{ minWidth: '200px' }}>
+                    <Autocomplete
+                        fullWidth
+                        disabled={!Boolean(committeeId)}
+                        options={keys.map((i) => ({ label: formatAddress(i.key, 6, 6), value: i.keyId }))}
+                        renderInput={(params) => <TextField {...params} label="Select encryption key" />}
+                        onChange={(e, value) => {
+                            setCampaignData({ keyId: String(value?.value) });
+                        }}
+                    />
+                </Box>
             </Box>
+
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 5 }}>
                 <Typography variant="h6" width="260px">
                     Capicity (Projects)
@@ -166,6 +174,7 @@ export default function CreateCampaign() {
                     type="number"
                 />
                 <TextField
+                    value={fundingOption}
                     select
                     sx={{ ml: 15, width: '300px' }}
                     label={'Funding options'}

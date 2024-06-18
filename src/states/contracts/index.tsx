@@ -1,17 +1,20 @@
 import { atom, useAtom, useAtomValue } from 'jotai';
 import ZkAppWorkerClient from 'src/libs/AppWorker/zkWorkerClient';
 import { toast } from 'react-toastify';
+import { NetworkId } from 'src/constants';
 
 export type TContractData = {
     workerClient: ZkAppWorkerClient | null;
     isInitWorker: boolean;
     isLoading: boolean;
+    networkId: NetworkId;
 };
 
 const initData: TContractData = {
     workerClient: null,
     isInitWorker: true,
     isLoading: false,
+    networkId: NetworkId.AuxoDevNet,
 };
 
 const appContract = atom<TContractData>(initData);
@@ -59,7 +62,7 @@ export const useAppContractFunction = () => {
         }
         return false;
     }
-    async function complie(cacheFiles: any) {
+    async function compile(cacheFiles: any) {
         setAppContractData({ isLoading: true });
         try {
             if (zkApp.workerClient) {
@@ -73,7 +76,9 @@ export const useAppContractFunction = () => {
                 await zkApp.workerClient.loadContract();
                 await zkApp.workerClient.compileContract(cacheFiles);
                 await zkApp.workerClient.initZkappInstance({
-                    campaignContract: 'B62qij4Pc5we9m1n7sx7Cpsq4JB6tjaaHYT2CwJa8Uz9ZwcY2qt5vPn',
+                    campaignContract: 'B62qpaYMPKGMpC4UvuscjW5VoX21eQJFWmcGxGW1zVqfMAUC18yx933',
+                    dkgContract: 'B62qizA7ZJxGakVK3Vcy6pdSedtXEY9rZber9EimAkzMAt4fCBpCQL9',
+                    fundingRequesterContract: 'B62qkcg1F7ncX45x6661jcmseVR1pAajDUEcyTm1Uhw6WK2ZHE68ANq',
                 });
                 setAppContractData({
                     isLoading: false,
@@ -89,7 +94,7 @@ export const useAppContractFunction = () => {
 
     return {
         setAppContractData,
-        complie,
+        compile,
         initClient,
     };
 };

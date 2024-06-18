@@ -5,7 +5,7 @@ import { Dayjs } from 'dayjs';
 import { useCampaignData, useCampaignFunctions } from 'src/states/campaign';
 
 export default function Timeline() {
-    const { setCampaignData, setApplicationForm } = useCampaignFunctions();
+    const { setCampaignData } = useCampaignFunctions();
     const { name, description, privateFunding } = useCampaignData();
     return (
         <>
@@ -30,19 +30,19 @@ export default function Timeline() {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
-                                label="From"
+                                label="Start at time"
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
-                                    setCampaignData({ applicationFrom: value?.toDate().toISOString() || '' });
+                                    setCampaignData({ applicationTimeStart: value?.toDate().toISOString() || '' });
                                 }}
                             />
 
-                            <DateTimePicker
+                            {/* <DateTimePicker
                                 label="To"
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ applicationTo: value?.toDate().toISOString() || '' });
                                 }}
-                            />
+                            /> */}
                         </LocalizationProvider>
                     </Box>
                     <Box className="timeline-row">
@@ -51,18 +51,18 @@ export default function Timeline() {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
-                                label="From"
+                                label="Start at time"
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
-                                    setCampaignData({ investmentFrom: value?.toDate().toISOString() || '' });
+                                    setCampaignData({ investmentTimeStart: value?.toDate().toISOString() || '' });
                                 }}
                             />
-                            <DateTimePicker
+                            {/* <DateTimePicker
                                 label="To"
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ investmentTo: value?.toDate().toISOString() || '' });
                                 }}
-                            />
+                            /> */}
                         </LocalizationProvider>
                     </Box>
                     <Box className="timeline-row">
@@ -71,18 +71,18 @@ export default function Timeline() {
                         </Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
-                                label="From"
+                                label="Start at time"
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
-                                    setCampaignData({ allocationFrom: value?.toDate().toISOString() || '' });
+                                    setCampaignData({ allocationTimeStart: value?.toDate().toISOString() || '' });
                                 }}
                             />
-                            <DateTimePicker
+                            {/* <DateTimePicker
                                 label="To"
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ allocationTo: value?.toDate().toISOString() || '' });
                                 }}
-                            />
+                            /> */}
                         </LocalizationProvider>
                     </Box>
                 </Grid>

@@ -36,7 +36,7 @@ export const useProfileFunction = () => {
             };
         });
     };
-    const getProfileData = useCallback(async () => {
+    const getProfileData = async () => {
         if (userAddress) {
             try {
                 const result = await getUserProfile(userAddress);
@@ -47,10 +47,11 @@ export const useProfileFunction = () => {
                     img: result.img,
                     name: result.name,
                 });
-            } catch (error) {}
+            } catch (error) {
+                console.log('getProfileData error:', error);
+            }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userAddress]);
+    };
 
     const submitProfileInfo = async (input: TProfileInput) => {
         try {

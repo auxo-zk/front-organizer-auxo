@@ -1,6 +1,8 @@
 import { sleep } from 'src/utils/format';
 import { ZkappWorkerReponse, ZkappWorkerRequest } from './worker';
 import { ArgumentZkFuction, ReturenValueZkFunction, TZkFuction } from './zkFunction';
+import { NetworkId } from 'src/constants';
+import { AuxoDevNetInfo, chainInfo } from 'src/constants/chainInfo';
 
 export default class ZkAppWorkerClient {
     worker: Worker;
@@ -25,7 +27,7 @@ export default class ZkAppWorkerClient {
         };
     }
     async loadWorker(): Promise<void> {
-        await sleep(4000);
+        await sleep(4100);
     }
 
     _call<Key extends TZkFuction>(fn: Key, args: ArgumentZkFuction<Key>): ReturenValueZkFunction<Key> {
@@ -37,8 +39,7 @@ export default class ZkAppWorkerClient {
         }) as ReturenValueZkFunction<Key>;
     }
 
-    async sendTransaction(transactionJSON: string, memo?: string) {
-        const transactionFee = 0.1;
+    async sendTransaction(transactionJSON: string, memo?: string, transactionFee: number = 0.1) {
         const { hash } = await window.mina!.sendTransaction({
             transaction: transactionJSON,
             feePayer: {
@@ -46,12 +47,14 @@ export default class ZkAppWorkerClient {
                 memo: memo || '',
             },
         });
-        const transactionLink = `https://berkeley.minaexplorer.com/transaction/${hash}`;
+
+        const networkId = await this._call('getNetworkId', {});
+        const transactionLink = `${networkId ? chainInfo[networkId].explorerUrl : 'NULL'}/transaction/${hash}`;
         return { hash, transactionLink };
     }
 
-    setActiveInstanceToBerkeley() {
-        return this._call('setActiveInstanceToBerkeley', {});
+    setActiveInstanceToNetwork(chainId: NetworkId) {
+        return this._call('setActiveInstanceToNetwork', { chainId });
     }
     loadContract() {
         console.log('Loading contract');
@@ -77,5 +80,8 @@ export default class ZkAppWorkerClient {
     }
     createCampaign(args: ArgumentZkFuction<'createCampaign'>) {
         return this._call('createCampaign', args);
+    }
+    checkValidAddress(args: ArgumentZkFuction<'checkValidAddress'>) {
+        return this._call('checkValidAddress', args);
     }
 }

@@ -8,9 +8,9 @@ import { formatDate } from 'src/utils/format';
 export default function CampaignOverview({ data }: { data: TCampaignDetail['overview'] }) {
     const activeSteps = useMemo(() => {
         const timeNow = Date.now();
-        if (timeNow > data.participation.from && timeNow < data.participation.to) return 0;
-        if (timeNow > data.investment.from && timeNow < data.investment.to) return 1;
-        if (timeNow > data.allocation.from && timeNow < data.allocation.to) return 2;
+        if (timeNow > data.timeline.startRequesting) return 2;
+        if (timeNow > data.timeline.startFunding) return 1;
+        if (timeNow > data.timeline.startParticipation) return 0;
 
         return 0;
     }, [data]);
@@ -49,9 +49,9 @@ export default function CampaignOverview({ data }: { data: TCampaignDetail['over
                         <StepView
                             activeStep={activeSteps}
                             steps={[
-                                { title: 'Participation', content: `${formatDate(Number(data.participation.from || 0), 'dd MMM')} - ${formatDate(Number(data.participation.to || 0), 'dd MMM')}` },
-                                { title: 'Investment', content: `${formatDate(Number(data.investment.from || 0), 'dd MMM')} - ${formatDate(Number(data.investment.to || 0), 'dd MMM')}` },
-                                { title: 'Allocation', content: `${formatDate(Number(data.allocation.from || 0), 'dd MMM')} - ${formatDate(Number(data.allocation.to || 0), 'dd MMM')}` },
+                                { title: 'Participation', content: `Start at: ${formatDate(Number(data.timeline.startParticipation || 0), 'MMMM dd, YYY')}` },
+                                { title: 'Investment', content: `Start at: ${formatDate(Number(data.timeline.startFunding || 0), 'MMMM dd, YYY')}` },
+                                { title: 'Allocation', content: `Start at: ${formatDate(Number(data.timeline.startRequesting || 0), 'MMMM dd, YYY')}` },
                             ]}
                         />
                     </Box>

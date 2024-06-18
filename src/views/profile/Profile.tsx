@@ -9,18 +9,22 @@ import { useProfileData, useProfileFunction } from './state';
 import HostingCampaign from './HostingCampaign';
 import { useModalData, useModalFunction } from 'src/states/modal';
 import EditForm from './EditForm';
+import { useWalletData } from 'src/states/wallet';
 
 export default function Profile() {
-    const { address, description, name, img, website } = useProfileData();
-    const { getProfileData, setProfileData, submitProfileAvatar } = useProfileFunction();
-    const {} = useModalData();
+    const { userAddress } = useWalletData();
+    const { description, name, img } = useProfileData();
+    const { getProfileData, submitProfileAvatar } = useProfileFunction();
+
     const { openModal, setModalData } = useModalFunction();
-    useEffect(() => {
-        getProfileData();
-    }, [getProfileData]);
+
     const handleOpenModal = () => {
         setModalData({ content: <EditForm />, open: true, title: 'Edit your profile' });
     };
+
+    useEffect(() => {
+        getProfileData();
+    }, [userAddress]);
     return (
         <Box>
             <Typography variant="h1" textTransform={'uppercase'} maxWidth={'614px'}>
@@ -43,13 +47,13 @@ export default function Profile() {
                 <Box sx={{ flexGrow: 1 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography variant="h4" fontWeight={600}>
-                            {name}
+                            {name || 'Your name'}
                         </Typography>
                         <IconButton onClick={handleOpenModal}>
                             <IconEdit color="primary" sx={{ cursor: 'pointer' }} />
                         </IconButton>
                     </Box>
-                    <Typography mt={1.5}>{description}</Typography>
+                    <Typography mt={1.5}>{description || 'Describe something about yourself.'}</Typography>
 
                     {/* <Box sx={{ display: 'flex', gap: 1.5, placeItems: 'center', mt: 2 }}>
                         <LinkedIn fontSize="large" sx={{ color: 'primary.light' }} />

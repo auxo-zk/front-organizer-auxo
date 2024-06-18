@@ -1,59 +1,56 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { toast } from 'react-toastify';
-import { postCampaignToIpfs } from 'src/services/campaign/api';
+import { getDataCreateCampaign, postCampaignToIpfs } from 'src/services/campaign/api';
 import { useWalletData } from './wallet';
 import { useAppContract } from './contracts';
 import { saveFile } from 'src/services/services';
+import { v4 as uuid } from 'uuid';
+import { isNumeric } from 'src/utils';
 
 export type CampaignDataType = {
     name: string;
     banner: string;
-    avatar?: string;
+    avatar: string;
     description: string;
-    applicationFrom: string;
-    applicationTo: string;
-    investmentFrom: string;
-    investmentTo: string;
-    allocationFrom: string;
-    allocationTo: string;
+    applicationTimeStart: string;
+    investmentTimeStart: string;
+    allocationTimeStart: string;
     privateFunding: boolean;
-    dkgCommittee: string;
-    encyptionKey: string;
+    committeeId: string;
+    keyId: string;
     capacity: number;
     fundingOption: number;
     applicationForm: {
-        [key: string]: {
-            hint?: string;
-            detail: string;
-            required?: boolean;
-        };
-    };
+        id: string;
+        hint: string;
+        detail: string;
+        required: boolean;
+    }[];
     bannerFile?: File;
     avatarFile?: File;
 };
 
 const initData: CampaignDataType = {
     name: '',
+    avatar: '',
     banner: '',
     description: '',
-    applicationFrom: '',
-    applicationTo: '',
-    investmentFrom: '',
-    investmentTo: '',
-    allocationFrom: '',
-    allocationTo: '',
+    applicationTimeStart: '',
+    investmentTimeStart: '',
+    allocationTimeStart: '',
     privateFunding: true,
-    dkgCommittee: '',
-    encyptionKey: '',
+    keyId: '',
+    committeeId: '',
     capacity: 0,
     fundingOption: 0,
-    applicationForm: {
-        '0': {
+    applicationForm: [
+        {
+            id: uuid(),
             hint: '',
             detail: '',
             required: true,
         },
-    },
+    ],
 };
 type ImageFiles = { bannerFile?: File; avatarFile?: File };
 
@@ -74,15 +71,27 @@ export const useCampaignFunctions = () => {
             ...data,
         }));
     };
-    const setApplicationForm = (data: CampaignDataType['applicationForm']) => {
+    const addApplicationFormItem = (item: CampaignDataType['applicationForm'][number]) => {
         _setCampaignData((prev) => ({
             ...prev,
-            applicationForm: {
-                ...prev.applicationForm,
-                ...data,
-            },
+            applicationForm: [...prev.applicationForm, item],
         }));
     };
+
+    const editApplicationFormItem = (index: number, item: Partial<CampaignDataType['applicationForm'][number]>) => {
+        _setCampaignData((prev) => ({
+            ...prev,
+            applicationForm: prev.applicationForm.map((formItem, i) => (i === index ? { ...formItem, ...item } : formItem)),
+        }));
+    };
+
+    const deleteApplicationFormItem = (index: number) => {
+        _setCampaignData((prev) => ({
+            ...prev,
+            applicationForm: prev.applicationForm.filter((_, i) => i !== index),
+        }));
+    };
+
     const handleCreateCampaign = async () => {
         const idtoast = toast.loading('Create transaction and proving...', { position: 'top-center', type: 'info' });
         try {
@@ -92,14 +101,32 @@ export const useCampaignFunctions = () => {
             if (workerClient === null) {
                 throw Error('Worker client failed');
             }
-            if (!data.avatarFile) {
+
+            let avatarUrl = data.avatar;
+            if (data.avatarFile) {
+                avatarUrl = (await saveFile(data.avatarFile)).URL;
+            }
+            if (!avatarUrl) {
                 throw Error('Avatar required!');
             }
-            if (!data.bannerFile) {
+
+            let bannerUrl = data.banner;
+            if (data.bannerFile) {
+                bannerUrl = (await saveFile(data.bannerFile)).URL;
+            }
+            if (!bannerUrl) {
                 throw Error('Banner required!');
             }
-            const avatarUrl = await saveFile(data.avatarFile);
-            const bannerUrl = await saveFile(data.bannerFile);
+
+            if (isNumeric(data.committeeId) === false) {
+                throw Error('Select committee is required!');
+            }
+            if (isNumeric(data.keyId) === false) {
+                throw Error('Select key is required!');
+            }
+
+            const dataCreateCampaign = await getDataCreateCampaign(data.committeeId, data.keyId);
+
             const response = await postCampaignToIpfs({
                 avatarImage: avatarUrl,
                 capacity: data.capacity,
@@ -108,33 +135,28 @@ export const useCampaignFunctions = () => {
                 fundingOption: data.fundingOption,
                 name: data.name,
                 privacyOption: {
-                    committeeId: 0,
+                    committeeId: Number(data.committeeId),
                     isPrivate: data.privateFunding,
-                    keyId: 0,
+                    keyId: Number(data.keyId),
                 },
-                questions: Object.values(data.applicationForm).map((item) => ({ question: item.detail, hint: item.hint || '', isRequired: item.required || false })),
+                questions: data.applicationForm.map((item) => ({ question: item.detail, hint: item.hint, isRequired: item.required })),
                 timeline: {
-                    allocation: {
-                        from: String(data.allocationFrom),
-                        to: String(data.allocationTo),
-                    },
-                    investment: {
-                        from: String(data.investmentFrom),
-                        to: String(data.investmentTo),
-                    },
-                    participation: {
-                        from: String(data.applicationFrom),
-                        to: String(data.applicationTo),
-                    },
+                    startParticipation: new Date(data.applicationTimeStart).getTime() / 1000,
+                    startFunding: new Date(data.investmentTimeStart).getTime() / 1000,
+                    startRequesting: new Date(data.allocationTimeStart).getTime() / 1000,
                 },
             });
             // console.log(response);
             await workerClient.createCampaign({
-                committeeId: '0',
-                ipfsHash: response.Hash || '',
-                keyId: '0',
-                projectId: '',
                 sender: walletData.userAddress,
+                ipfsHash: response.Hash || '',
+                committeeId: data.committeeId,
+                keyId: data.keyId,
+                projectId: '',
+                startFunding: new Date(data.investmentTimeStart).getTime() / 1000 + '',
+                startParticipation: new Date(data.applicationTimeStart).getTime() / 1000 + '',
+                startRequesting: new Date(data.allocationTimeStart).getTime() / 1000 + '',
+                backendData: dataCreateCampaign,
             });
             await workerClient.proveTransaction();
             const transactionJSON = await workerClient.getTransactionJSON();
@@ -151,7 +173,9 @@ export const useCampaignFunctions = () => {
     };
     return {
         setCampaignData,
-        setApplicationForm,
+        addApplicationFormItem,
+        editApplicationFormItem,
+        deleteApplicationFormItem,
         handleCreateCampaign,
     };
 };
