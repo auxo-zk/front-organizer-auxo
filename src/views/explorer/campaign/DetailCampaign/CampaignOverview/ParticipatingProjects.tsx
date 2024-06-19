@@ -1,4 +1,4 @@
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, Grid, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { IconSpinLoading } from 'src/assets/svg/icon';
 import NoData from 'src/components/NoData';
@@ -39,18 +39,23 @@ export default function ParticipatingProjects({ campaignId }: { campaignId: stri
         return <NoData text="No Project Found!" />;
     }
     return (
-        <Box>
-            <TextField variant="outlined" color="secondary" label="Search project" name="project_name" sx={{ width: '100%', maxWidth: '380px', mb: 3 }} />
+        <>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', placeItems: 'center' }} mt={5.5}>
+                <Typography variant="h6">Participating Projects ({listProject.length})</Typography>
+            </Box>
+            <Box mt={3}>
+                <TextField variant="outlined" color="secondary" label="Search project" name="project_name" sx={{ width: '100%', maxWidth: '380px', mb: 3 }} />
 
-            <Grid container spacing={3}>
-                {listProject.map((item, index) => {
-                    return (
-                        <Grid key={'projectJoinedcampain' + index + item.name} item xs={12} xsm={6} md={4}>
-                            <CardProject data={item}></CardProject>
-                        </Grid>
-                    );
-                })}
-            </Grid>
-        </Box>
+                <Grid container spacing={3}>
+                    {listProject.map((item, index) => {
+                        return (
+                            <Grid key={'projectJoinedcampain' + index + item.name} item xs={12} xsm={6} md={4}>
+                                <CardProject data={item}></CardProject>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </Box>
+        </>
     );
 }
