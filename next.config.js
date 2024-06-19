@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        swcPlugins: [['@swc-jotai/react-refresh', {}]],
-    },
     reactStrictMode: false,
     images: {
         remotePatterns: [{ hostname: 'storage.googleapis.com' }],
