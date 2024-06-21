@@ -24,7 +24,7 @@ export default function RightBox() {
                     return (
                         <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', placeItems: 'center', pt: 3 }}>
                             <Typography variant="body2" color={'primary.light'}>
-                                FileName.pdf
+                                {item.fileName}
                             </Typography>
                             <SaveAltRounded sx={{ color: 'primary.light', cursor: 'pointer' }} fontSize="small" />
                         </Box>
