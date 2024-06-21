@@ -11,6 +11,7 @@ export const apiUrl = {
     //Project
     getTopProject: `${BACKEND_BASE_URL}/v0/projects`,
     getListProject: `${BACKEND_BASE_URL}/v0/projects`,
+    getParticipationsByProjectId: (projectId: string) => `${BACKEND_BASE_URL}/v0/projects/${projectId}/participations`,
     saveProject: `${BACKEND_BASE_URL}/v0/builders`,
     createProject: `${BACKEND_BASE_URL}/v0/builders`,
     getDraft: `${BACKEND_BASE_URL}/v0/builders/drafts`,
