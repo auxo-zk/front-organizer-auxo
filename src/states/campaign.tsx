@@ -141,9 +141,9 @@ export const useCampaignFunctions = () => {
                 },
                 questions: data.applicationForm.map((item) => ({ question: item.detail, hint: item.hint, isRequired: item.required })),
                 timeline: {
-                    startParticipation: new Date(data.applicationTimeStart).getTime() / 1000,
-                    startFunding: new Date(data.investmentTimeStart).getTime() / 1000,
-                    startRequesting: new Date(data.allocationTimeStart).getTime() / 1000,
+                    startParticipation: new Date(data.applicationTimeStart).getTime(),
+                    startFunding: new Date(data.investmentTimeStart).getTime(),
+                    startRequesting: new Date(data.allocationTimeStart).getTime(),
                 },
             });
             // console.log(response);
