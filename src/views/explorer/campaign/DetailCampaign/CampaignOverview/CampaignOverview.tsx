@@ -16,7 +16,7 @@ export default function CampaignOverview({ data, idCampaign }: { data: TCampaign
         if (timeNow > data.timeline.startFunding) return 1;
         if (timeNow > data.timeline.startParticipation) return 0;
 
-        return 0;
+        return -1;
     }, [data]);
     return (
         <Box>
