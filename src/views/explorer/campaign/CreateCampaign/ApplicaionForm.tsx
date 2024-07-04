@@ -38,8 +38,8 @@ export default function ApplicationForm() {
                                     <IconTrash sx={{ color: 'primary.light' }} />
                                 </IconButton>
                             </Box>
-                            <TextField label="Hint (optional)" value={item.hint} onChange={(e) => handleItemChange(index, { hint: e.target.value })} fullWidth sx={{ mb: 2, background: 'white' }} />
                             <CustomEditor value={item.detail} onChange={(v) => handleItemChange(index, { detail: v })} />
+                            <TextField label="Hint (optional)" value={item.hint} onChange={(e) => handleItemChange(index, { hint: e.target.value })} fullWidth sx={{ mt: 2, background: 'white' }} />
                             <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mt: 1 }}>
                                 <Typography>Required</Typography>
                                 <Switch checked={item.required} onChange={(e) => handleItemChange(index, { required: e.target.checked })} />
