@@ -5,6 +5,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { copyTextToClipboard } from 'src/utils';
 
 export default function WalletVerified() {
     const { userAddress } = useWalletData();
@@ -18,7 +19,7 @@ export default function WalletVerified() {
                 <Typography color="primary.main" display={'flex'} alignItems={'center'} variant="h6">
                     {formatAddress(userAddress)}
                 </Typography>
-                <IconButton>
+                <IconButton size="small" color="primary" onClick={() => copyTextToClipboard(userAddress)}>
                     <ContentCopyIcon />
                 </IconButton>
             </Box>

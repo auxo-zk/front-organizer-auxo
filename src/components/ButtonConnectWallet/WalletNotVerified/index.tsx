@@ -1,12 +1,15 @@
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import { useWalletData, useWalletFunction } from 'src/states/wallet';
 import { formatAddress } from 'src/utils/format';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { ContentCopy } from '@mui/icons-material';
+import { copyTextToClipboard } from 'src/utils';
+import { toast } from 'react-toastify';
 
 export default function WalletNotVerified() {
     const { userAddress } = useWalletData();
     const { disconnectWallet, login } = useWalletFunction();
+
     return (
         <Box sx={{ boxShadow: 1, p: 2 }}>
             <Typography color="primary.main" variant="body1">
@@ -16,8 +19,8 @@ export default function WalletNotVerified() {
                 <Typography color="primary.main" display={'flex'} alignItems={'center'} variant="h6">
                     {formatAddress(userAddress)}
                 </Typography>
-                <IconButton>
-                    <ContentCopyIcon />
+                <IconButton size="small" color="primary" onClick={() => copyTextToClipboard(userAddress)}>
+                    <ContentCopy />
                 </IconButton>
             </Box>
             <Box sx={{ display: 'flex', alignItem: 'center', mb: 1 }}>
