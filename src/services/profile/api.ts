@@ -2,6 +2,7 @@ import { url } from 'inspector';
 import { apiUrl } from '../url';
 import axios from 'axios';
 import { getJwt } from '../project/api';
+import { CampaignState, TCampaignData } from '../campaign/api';
 
 export type TProfileData = {
     address: string;
@@ -33,9 +34,34 @@ export type THostingCampaign = {
     active: true;
 };
 
-export async function fetchHostingCampaign(address: string): Promise<THostingCampaign[]> {
+export async function fetchHostingCampaign(address: string): Promise<TCampaignData[]> {
     const response: Array<any> = (await axios.get(apiUrl.getHostingCampaign(address))).data;
-    return response;
+    return response.map((item) => {
+        const timeLine = {
+            startParticipation: item.timeline?.startParticipation ? item.timeline.startParticipation * 1000 : Date.now() + 60000,
+            startFunding: item.timeline?.startFunding ? item.timeline.startFunding * 1000 : Date.now() + 60000,
+            startRequesting: item.timeline?.startRequesting ? item.timeline.startRequesting * 1000 : Date.now() + 60000,
+        };
+        const now = new Date().getTime();
+        let state = CampaignState.UPCOMING;
+        if (now > timeLine.startParticipation && now < timeLine.startFunding) {
+            state = CampaignState.APPLICATION;
+        } else if (now > timeLine.startFunding && now < timeLine.startRequesting) {
+            state = CampaignState.FUNDING;
+        } else if (now > timeLine.startRequesting) {
+            state = CampaignState.ALLOCATION;
+        }
+        return {
+            name: item.ipfsData?.name || '---',
+            fundingOption: item.ipfsData?.fundingOption || 2,
+            capacity: item.ipfsData?.capacity || '0',
+            date: new Date().toLocaleDateString(),
+            avatar: item.ipfsData?.avatarImage || '',
+            banner: item.ipfsData?.coverImage || '',
+            state: state,
+            campaignId: item.campaignId + '' || '#',
+        };
+    });
 }
 
 export type TProfileInput = {
