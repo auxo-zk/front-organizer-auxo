@@ -166,7 +166,7 @@ export default function CreateCampaign() {
             </Box>
             <Box className="timeline-row">
                 <TextField
-                    label="Capacity"
+                    label="Capacity*"
                     sx={{ width: '140px' }}
                     onChange={(e) => {
                         setCampaignData({ capacity: Number(e.target.value) });

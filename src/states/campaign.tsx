@@ -124,6 +124,9 @@ export const useCampaignFunctions = () => {
             if (isNumeric(data.keyId) === false) {
                 throw Error('Select key is required!');
             }
+            if (isNaN(data.capacity) || !Number.isInteger(data.capacity) || data.capacity <= 0) {
+                throw Error('Capacity must be a positive integer number!');
+            }
 
             const dataCreateCampaign = await getDataCreateCampaign(data.committeeId, data.keyId);
 
