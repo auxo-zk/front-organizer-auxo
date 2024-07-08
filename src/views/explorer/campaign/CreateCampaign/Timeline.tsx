@@ -1,12 +1,12 @@
 import { Typography, Box, Grid } from '@mui/material';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useCampaignData, useCampaignFunctions } from 'src/states/campaign';
 
 export default function Timeline() {
     const { setCampaignData } = useCampaignFunctions();
-    const { name, description, privateFunding } = useCampaignData();
+    const { name, description, privateFunding, applicationTimeStart, allocationTimeStart, investmentTimeStart } = useCampaignData();
     return (
         <>
             <Typography variant="h6" mt={2} mb={4}>
@@ -32,6 +32,7 @@ export default function Timeline() {
                             <DateTimePicker
                                 label="Start at time"
                                 sx={{ mr: 3 }}
+                                minDate={dayjs(Date.now())}
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ applicationTimeStart: value?.toDate().toISOString() || '' });
                                 }}
@@ -52,6 +53,7 @@ export default function Timeline() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label="Start at time"
+                                minDate={dayjs(applicationTimeStart).add(1, 'day')}
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ investmentTimeStart: value?.toDate().toISOString() || '' });
@@ -72,6 +74,7 @@ export default function Timeline() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label="Start at time"
+                                minDate={dayjs(investmentTimeStart).add(1, 'day')}
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ allocationTimeStart: value?.toDate().toISOString() || '' });
