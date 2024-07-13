@@ -53,7 +53,7 @@ export default function Timeline() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label="Start at time"
-                                minDate={dayjs(applicationTimeStart).add(1, 'day')}
+                                minDate={dayjs(applicationTimeStart).add(2, 'minute')}
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ investmentTimeStart: value?.toDate().toISOString() || '' });
@@ -74,7 +74,7 @@ export default function Timeline() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateTimePicker
                                 label="Start at time"
-                                minDate={dayjs(investmentTimeStart).add(1, 'day')}
+                                minDate={dayjs(investmentTimeStart).add(2, 'minute')}
                                 sx={{ mr: 3 }}
                                 onChange={(value: Dayjs | null, _: any) => {
                                     setCampaignData({ allocationTimeStart: value?.toDate().toISOString() || '' });
