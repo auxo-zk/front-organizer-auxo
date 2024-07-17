@@ -139,7 +139,8 @@ export async function postCampaignToIpfs(input: CampaignInput): Promise<{
     return response.data;
 }
 
-export async function getParticipatingProjects(campaignId: string): Promise<TProjectData[]> {
+export type TProjectFundData = TProjectData & { totalFundedAmount: number };
+export async function getParticipatingProjects(campaignId: string): Promise<TProjectFundData[]> {
     const response = await axios.get(apiUrl.getParticipatingProjects(campaignId));
     return response.data.map((item: any) => {
         return {
@@ -149,6 +150,7 @@ export async function getParticipatingProjects(campaignId: string): Promise<TPro
             desc: item.ipfsData?.description || '',
             date: new Date().toLocaleDateString(),
             idProject: item.projectId + '' || '#',
+            totalFundedAmount: item.totalFundedAmount / 10 ** 9,
         };
     });
 }
