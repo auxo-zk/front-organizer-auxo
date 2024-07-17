@@ -4,6 +4,7 @@ import { BACKEND_BASE_URL } from '../baseUrl';
 import { LocalStorageKey } from 'src/constants';
 import { TProjectData } from '../project/api';
 import { TRef, TWitness } from '../type';
+import { Constants } from '@auxo-dev/platform';
 
 const getJwt = () => {
     return localStorage.getItem(LocalStorageKey.AccessToken) || '';
@@ -150,7 +151,7 @@ export async function getParticipatingProjects(campaignId: string): Promise<TPro
             desc: item.ipfsData?.description || '',
             date: new Date().toLocaleDateString(),
             idProject: item.projectId + '' || '#',
-            totalFundedAmount: item.totalFundedAmount / 10 ** 9,
+            totalFundedAmount: (item.totalFundedAmount / 10 ** 9) * Constants.MINIMAL_MINA_UNIT,
         };
     });
 }
